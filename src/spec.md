@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Make the facility environment in the 3D game scene visible (not fully black) while keeping the intended dark industrial-horror mood.
+**Goal:** Make the 3D game map view render fullscreen across desktop and mobile without introducing scrollbars, while keeping HUD overlays correctly positioned above the canvas.
 
 **Planned changes:**
-- Adjust Three.js / React Three Fiber renderer settings (e.g., exposure/tone mapping/background) and scene lighting so cafeteria/corridor geometry is readable on load without brightening the aesthetic.
-- Ensure full-screen overlays (hood vignette and FadeToBlack) do not unintentionally obscure gameplay during normal play by tuning default opacity/blend and keeping FadeToBlack inactive unless explicitly triggered.
+- Update the GameView (or equivalent) layout/CSS so the React Three Fiber Canvas container fills the viewport (100vw/100vh or equivalent) without letterboxing from parent sizing.
+- Ensure root layout elements allow full-height rendering (e.g., html/body/app root set to 100% height) and prevent unintended overflow that causes scrollbars.
+- Verify/adjust HUD overlay positioning/z-index so existing UI (stress indicator, settings button, dialogue box, mobile controls) remains correctly anchored on top of the fullscreen canvas.
 
-**User-visible outcome:** When the game loads, players can clearly see the cafeteria and corridor in a dark, tense atmosphere, and overlays no longer make the screen appear black during normal gameplay (while scripted fades still work when triggered).
+**User-visible outcome:** The 3D scene fills the entire visible screen on desktop and mobile with no unwanted page scrollbars, and the HUD remains properly positioned over the fullscreen game view.

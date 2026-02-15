@@ -1,56 +1,41 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T01:57:09.223Z",
+  "generatedAt": "2026-02-15T02:02:46.003Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
-        "id": "REQ-13",
-        "summary": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
+        "id": "REQ-15",
+        "summary": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/game/GameView.tsx",
-          "frontend/src/game/World/FacilityWorld.tsx"
+          "frontend/src/index.css",
+          "frontend/index.html"
         ],
         "matchedFiles": [
           "frontend/src/game/GameView.tsx",
-          "frontend/src/game/World/FacilityWorld.tsx"
-        ]
-      },
-      {
-        "id": "REQ-14",
-        "summary": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/ui/Hud/HudShell.tsx",
-          "frontend/src/ui/Overlays/FadeToBlack.tsx",
-          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/ui/Hud/HudShell.tsx",
-          "frontend/src/ui/Overlays/FadeToBlack.tsx",
-          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+          "frontend/src/index.css",
+          "frontend/index.html"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
     "frontend/src/game/GameView.tsx",
-    "frontend/src/game/World/FacilityWorld.tsx",
-    "frontend/src/ui/Hud/HudShell.tsx",
-    "frontend/src/ui/Overlays/FadeToBlack.tsx",
-    "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

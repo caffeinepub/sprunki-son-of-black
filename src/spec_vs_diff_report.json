@@ -1,18 +1,40 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T01:57:09.221Z",
-  "summary": "REQ-13 and REQ-14 appear implemented. The diff adds Three.js/R3F renderer and scene configuration (tone mapping, exposure, color space, dark background) and rebalances/augments world lighting so the facility geometry is visible while staying dark. It also ensures overlays (hood vignette and fade-to-black) do not black out gameplay by default: the vignette opacity is reduced and FadeToBlack defaults to inactive and is not rendered when inactive.",
+  "generatedAt": "2026-02-15T02:02:46.000Z",
+  "summary": "REQ-15 (fullscreen GameView/Canvas, root elements fill viewport, no scrollbars, HUD overlays on top) appears implemented via fixed/inset container in GameView, full-height wrapper in App, and global html/body/#root 100% height + overflow hidden. However, the diff also includes unrequested rendering/scene changes (tone mapping/exposure/output color space and lighting adjustments) and project metadata updates, which go beyond the fullscreen-only scope and violate stated non-goals.",
   "missing_requirements": [],
-  "hallucinated_features": [],
+  "hallucinated_features": [
+    {
+      "description": "Changed Three.js/WebGL renderer configuration (toneMapping, toneMappingExposure, outputColorSpace) and set an explicit scene background color.",
+      "reason": "Non-goals explicitly say not to change scene lighting/tone mapping/world layout as part of the fullscreen change; these rendering changes were not requested by REQ-15.",
+      "evidence": [
+        "frontend/src/game/GameView.tsx"
+      ]
+    },
+    {
+      "description": "Rebalanced/modified world lighting (ambient/hemisphere/directional/practical/accent lights) in FacilityWorld.",
+      "reason": "Not requested by REQ-15 and explicitly disallowed by non-goals (no scene lighting changes). Evidence is from the diff summary metadata indicating such changes.",
+      "evidence": [
+        "frontend/src/game/World/FacilityWorld.tsx",
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "description": "Updated project metadata/state summary.",
+      "reason": "Not requested by REQ-15; unrelated to fullscreen rendering behavior.",
+      "evidence": [
+        "project_state.json"
+      ]
+    }
+  ],
   "confidence": 0.78,
   "changed_files": [
     "frontend-file-summaries.txt",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
     "frontend/src/game/GameView.tsx",
-    "frontend/src/game/World/FacilityWorld.tsx",
-    "frontend/src/ui/Hud/HudShell.tsx",
-    "frontend/src/ui/Overlays/FadeToBlack.tsx",
-    "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+    "frontend/src/index.css",
     "project_state.json"
   ]
 }

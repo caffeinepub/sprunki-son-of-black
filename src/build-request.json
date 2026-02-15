@@ -1,54 +1,34 @@
 {
   "kind": "build_request",
-  "title": "Fix black map rendering so the facility is visible",
+  "title": "Make the 3D map/game view render fullscreen",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-13",
-      "text": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
+      "id": "REQ-15",
+      "text": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-7"
+          "msg-5"
         ],
         "quotes": [
-          "CAN YOU MAKE THE MAP NOT JUST BLACK"
+          "Make the map fullscreened"
         ]
       },
       "acceptanceCriteria": [
-        "When the game loads, the cafeteria and corridor geometry are clearly visible without requiring user interaction.",
-        "The scene remains dark/tense, but surfaces (floor/walls/props) are distinguishable and not crushed to pure black across most of the screen.",
-        "Changes are implemented via Three.js/React Three Fiber configuration and/or world light setup (no backend changes)."
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-7"
-        ],
-        "quotes": [
-          "CAN YOU MAKE THE MAP NOT JUST BLACK"
-        ]
-      },
-      "acceptanceCriteria": [
-        "With default gameplay (no ending/transition), the FadeToBlack overlay is not visible.",
-        "The hood vignette overlay darkens edges but does not make the center gameplay view appear black.",
-        "If FadeToBlack is triggered by existing scripted events, it still fades smoothly to black as designed."
+        "On desktop and mobile, the 3D scene fills the entire visible viewport (no letterboxing caused by container sizing).",
+        "No page scrollbars appear during normal gameplay due to layout sizing (unless intentionally added elsewhere).",
+        "HUD overlays (stress indicator, settings button, dialogue box, mobile controls) remain positioned correctly on top of the fullscreen canvas."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (read-only Shadcn components).",
-    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Backend architecture must remain single-actor; no backend changes are required for this request."
+    "Do not edit files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything under frontend/src/components/ui (immutable paths).",
+    "Keep the backend as a single Motoko actor; no backend changes are required for this request."
   ],
   "nonGoals": [
-    "Adding a new map/level or new gameplay content.",
-    "Adding real-time networking or external services.",
-    "Changing the overall horror/industrial theme to a bright or colorful aesthetic."
+    "Do not change scene lighting, tone mapping, or world layout as part of this fullscreen change.",
+    "Do not add new gameplay features, scenes, or UI panels beyond what is needed to support fullscreen rendering."
   ],
   "imageRequirements": {
     "required": [],

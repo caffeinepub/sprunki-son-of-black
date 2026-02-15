@@ -2,11 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-3d-scene-rendering-so-the-facility-environment-is-visible-not-fully-black-by-adjusting-scene-lighting-and-renderer-settings-exposure-tone-mapping-background-while-preserving-the-intended-dark-industrial-horror-mood",
-      "featureTitle": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
+      "featureId": "feature-make-the-3d-game-map-react-three-fiber-canvas-render-fullscreen-by-ensuring-the-gameview-container-fills-the-viewport-width-and-height-and-the-app-root-elements-html-body-root-allow-100-height-without-introducing-scrollbars",
+      "featureTitle": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
       "files": [
+        "frontend/index.html",
         "frontend/src/game/GameView.tsx",
-        "frontend/src/game/World/FacilityWorld.tsx"
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,27 +17,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-13"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-prevent-full-screen-overlays-from-unintentionally-making-gameplay-appear-black-by-ensuring-the-hood-vignette-and-fade-overlay-do-not-fully-obscure-the-scene-during-normal-play-e-g-adjust-blend-opacity-defaults-and-ensure-fadetoblack-is-inactive-unless-explicitly-triggered",
-      "featureTitle": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
-      "files": [
-        "frontend/src/ui/Hud/HudShell.tsx",
-        "frontend/src/ui/Overlays/FadeToBlack.tsx",
-        "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-14"
+        "REQ-15"
       ],
       "confidence": "high"
     }

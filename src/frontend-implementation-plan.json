@@ -1,52 +1,31 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix black 3D map visibility (lighting + overlays)",
+  "title": "Render the 3D GameView fullscreen without scrollbars",
   "requirements": [
     {
-      "id": "REQ-13",
-      "summary": "Adjust Three.js/React Three Fiber renderer and world lighting so the facility is visible while keeping a dark industrial-horror mood.",
+      "id": "REQ-15",
+      "summary": "Ensure the React Three Fiber GameView fills the viewport on all devices by fixing root element height rules and making the Canvas container occupy the full visible viewport without introducing scrollbars, while preserving HUD overlay positioning.",
       "acceptanceCriteria": [
-        "When the game loads, the cafeteria and corridor geometry are clearly visible without requiring user interaction.",
-        "The scene remains dark/tense, but surfaces (floor/walls/props) are distinguishable and not crushed to pure black across most of the screen.",
-        "Changes are implemented via Three.js/React Three Fiber configuration and/or world light setup (no backend changes)."
+        "On desktop and mobile, the 3D scene fills the entire visible viewport (no letterboxing caused by container sizing).",
+        "No page scrollbars appear during normal gameplay due to layout sizing (unless intentionally added elsewhere).",
+        "HUD overlays (stress indicator, settings button, dialogue box, mobile controls) remain positioned correctly on top of the fullscreen canvas."
       ],
       "file_operations": [
         {
           "path": "frontend/src/game/GameView.tsx",
           "operation": "modify",
-          "description": "Tune Canvas renderer configuration to avoid crushed blacks: set appropriate color management/output color space, apply a filmic tone mapping with a calibrated exposure, and set a subtle non-black clear/background color so unlit pixels don’t render as pure black while preserving the dark mood."
+          "description": "Update the GameView outer container styling so it reliably occupies the full viewport (e.g., viewport-height aware sizing and overflow hidden) and remains the positioning context for HUD overlays; ensure the Canvas inherits full-size dimensions from its parent without introducing layout-driven letterboxing."
         },
         {
-          "path": "frontend/src/game/World/FacilityWorld.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Rebalance scene lighting for readability: strengthen/adjust ambient/hemisphere fill, refine directional and corridor practical light intensities/distances/colors, and (if needed) add low-intensity accent lights to reveal key surfaces (floor/walls/props) without brightening the whole scene."
-        }
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "summary": "Ensure HUD overlays (hood vignette and fade overlay) do not unintentionally obscure gameplay during normal play while preserving scripted fade behavior.",
-      "acceptanceCriteria": [
-        "With default gameplay (no ending/transition), the FadeToBlack overlay is not visible.",
-        "The hood vignette overlay darkens edges but does not make the center gameplay view appear black.",
-        "If FadeToBlack is triggered by existing scripted events, it still fades smoothly to black as designed."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/ui/Hud/HudShell.tsx",
-          "operation": "modify",
-          "description": "Wire FadeToBlack so it is explicitly inactive by default (and only activated by an existing trigger if/when connected), ensuring it cannot accidentally render during normal play."
+          "description": "Adjust global layout CSS to ensure html, body, and #root consistently allow 100% height and prevent scrollbars (including mobile dynamic viewport considerations), avoiding width rules (e.g., 100vw) that can cause horizontal overflow; keep existing theme tokens and non-goal rendering settings unchanged."
         },
         {
-          "path": "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Harden FadeToBlack defaults and rendering behavior to prevent accidental visibility: ensure inactive state always resets opacity to 0 and the component returns null unless actively fading."
-        },
-        {
-          "path": "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
-          "operation": "modify",
-          "description": "Reduce the vignette’s effective darkness so it doesn’t crush the center view: adjust default opacity and blend behavior (keep atmospheric edge-darkening, but maintain visible midtones in the playable center)."
+          "description": "Ensure the document root elements support full-height rendering for the React mount (e.g., add appropriate attributes/classes or minimal structure changes) so the GameView can fill the viewport without scrollbars."
         }
       ]
     }
