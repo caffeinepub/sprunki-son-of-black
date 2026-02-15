@@ -1,42 +1,63 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore visibility of 3D facility scene while preserving dark horror mood",
+  "title": "Dark-but-visible facility lighting preset retry",
   "requirements": [
     {
-      "id": "REQ-16",
-      "summary": "Fix black-screen rendering by calibrating renderer exposure/tone-mapping, ensuring world lighting/materials read correctly, and preventing HUD overlays from obscuring the scene unless explicitly triggered.",
+      "id": "REQ-17",
+      "summary": "Replace facility lighting with a single global dark-but-visible preset applied consistently across corridor and cafeteria.",
       "acceptanceCriteria": [
-        "On first load, the facility geometry (floors/walls/props) is visibly rendered (not a fully black screen) on both desktop and mobile-sized viewports.",
-        "The hood vignette overlay remains subtle and does not make the scene appear black during normal play.",
-        "The fade-to-black overlay is not active by default and only appears when explicitly triggered; when inactive it does not render or affect scene visibility.",
-        "Changes do not introduce scrollbars and the Canvas remains fullscreen."
+        "In all facility areas (corridor and cafeteria), the player can clearly see walls, floors, and major props without relying on the HUD or overlays.",
+        "The overall scene remains dark and tense (not brightly lit), but no large areas of the environment render as pure black during normal gameplay.",
+        "Lighting changes are implemented primarily in `frontend/src/game/World/FacilityWorld.tsx` and are applied consistently across the whole map (not just one room)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/World/FacilityWorld.tsx",
+          "operation": "modify",
+          "description": "Implement a cohesive global lighting preset (baseline ambient/hemisphere + subtle key/fill + limited local practical lights) tuned for industrial-horror darkness without black-crush. Ensure the preset affects both corridor and cafeteria uniformly (not room-by-room), and adjust/normalize any existing light intensities/distances/shadow settings and key emissive materials (e.g., keycard) so core geometry remains readable everywhere."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Tune renderer exposure/tone-mapping/background so the new lighting remains dark-but-visible without washed-out emissives or crushed blacks.",
+      "acceptanceCriteria": [
+        "`frontend/src/game/GameView.tsx` produces a stable dark-but-visible image on initial load (no fully black frame after scene mounts).",
+        "Tone mapping/exposure settings do not wash out emissive elements (e.g., keycard emissive) and do not overbrighten the entire scene.",
+        "The scene background remains dark and cohesive with the facility mood (no bright/white clear color)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/game/GameView.tsx",
           "operation": "modify",
-          "description": "Verify and adjust renderer configuration to avoid underexposure (tone-mapping + exposure) while keeping a dark industrial-horror look; ensure color space/output settings are correct and consider setting renderer defaults via Canvas onCreated (e.g., physically-correct lighting / color management) so the scene is not rendered fully black on load."
-        },
-        {
-          "path": "frontend/src/game/World/FacilityWorld.tsx",
-          "operation": "modify",
-          "description": "Verify lighting and material visibility: ensure there is sufficient baseline fill light (ambient/hemisphere) and key lights (directional/point) to reveal geometry without flattening the mood; validate shadow settings and material parameters (roughness/metalness/emissive) so surfaces don’t read as pure black under the chosen tone mapping."
-        },
+          "description": "Adjust Canvas renderer configuration (tone mapping choice, exposure level, output color space, shadow/map settings if needed) and confirm scene background clear color stays near-black. Tune exposure to preserve emissive readability while preventing global overbrightening and avoid initial-load black frames by ensuring renderer/scene settings are applied deterministically at mount."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Ensure HUD overlays remain subtle: hood vignette does not materially reduce visibility, and FadeToBlack is inactive unless explicitly triggered.",
+      "acceptanceCriteria": [
+        "During normal gameplay, the hood vignette overlay does not reduce visibility enough to make the 3D environment appear black.",
+        "FadeToBlack does not render or affect the screen unless explicitly activated via its `active` prop.",
+        "Visibility improvements are achieved via 3D environment lighting/exposure rather than by removing the horror vignette entirely."
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
           "operation": "modify",
-          "description": "Reduce/retune the vignette’s visual impact so it remains subtle during normal gameplay (e.g., lower opacity and/or adjust blend mode/implementation) and cannot make the full scene appear black by default; ensure it stays as an overlay and does not affect Canvas sizing or introduce scrollbars."
-        },
-        {
-          "path": "frontend/src/ui/Overlays/FadeToBlack.tsx",
-          "operation": "modify",
-          "description": "Ensure the fade overlay has no effect unless explicitly activated: confirm it returns null when inactive (no DOM layer/opacity effect), and validate any default styling (z-index/background/opacity) cannot inadvertently obscure the scene on initial load."
+          "description": "Reduce the hood vignette’s effective darkening (e.g., lower opacity and/or adjust blending approach) so it remains present but subtle and does not make the 3D scene appear black during normal play."
         },
         {
           "path": "frontend/src/ui/Hud/HudShell.tsx",
           "operation": "modify",
-          "description": "Verify overlay wiring so neither hood vignette nor fade-to-black obscures the scene during normal play: confirm fade-to-black is not triggered by default, and ensure overlay stacking/z-index keeps HUD readable without turning the entire view black."
+          "description": "Ensure FadeToBlack remains inactive by default and is only activated by explicit game-driven triggers (no unintended activation). Confirm the overlay composition order keeps the vignette subtle and that visibility gains come from 3D lighting/exposure rather than disabling the vignette."
+        },
+        {
+          "path": "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "operation": "modify",
+          "description": "Verify FadeToBlack has zero visual impact when `active` is false (including not rendering when fully transparent) and that transitions only occur when explicitly activated via props."
         }
       ]
     }

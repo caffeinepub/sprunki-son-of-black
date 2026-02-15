@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the black-screen rendering issue so the 3D facility scene is clearly visible during gameplay while keeping the intended dark industrial-horror mood.
+**Goal:** Replace the facility’s current lighting with a single global “dark-but-visible” preset so all areas remain readable while preserving an industrial horror mood.
 
 **Planned changes:**
-- Verify and adjust renderer configuration in `frontend/src/game/GameView.tsx` (tone mapping, exposure, and related render settings) to prevent the scene from rendering fully black by default.
-- Verify lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx` so facility geometry renders visibly under normal gameplay conditions.
-- Ensure UI overlays (hood vignette and fade-to-black) do not obscure the scene during normal play; confirm fade-to-black is inactive by default and only appears when explicitly triggered.
-- Confirm the game Canvas remains fullscreen with no scrollbars on both desktop and mobile-sized viewports.
+- Update `frontend/src/game/World/FacilityWorld.tsx` to use a consistent global lighting preset across the entire facility (corridor and cafeteria) that keeps floors, walls, and key props visible without becoming bright.
+- Adjust renderer exposure/tone-mapping/clear color in `frontend/src/game/GameView.tsx` to avoid crushed blacks on load while keeping emissive elements from washing out and maintaining a dark background.
+- Verify overlays do not undermine visibility by keeping the hood vignette subtle and ensuring FadeToBlack has no effect unless its `active` prop is explicitly enabled.
 
-**User-visible outcome:** On load, players can see the 3D facility (floors/walls/props) on desktop and mobile; the vignette stays subtle, and fade-to-black only appears when triggered.
+**User-visible outcome:** During normal gameplay, the facility stays dark and tense but remains clearly visible everywhere (no large pure-black areas), with stable rendering on load and non-intrusive overlays.

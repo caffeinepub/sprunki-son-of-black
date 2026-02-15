@@ -1,30 +1,50 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T02:08:15.795Z",
+  "generatedAt": "2026-02-15T02:59:43.359Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-16",
-        "summary": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
+        "id": "REQ-17",
+        "summary": "Replace the current facility lighting setup with a new global dark-but-visible lighting preset that applies across the entire facility, ensuring all core environment geometry (floors, walls, props) is readable everywhere while keeping an industrial horror mood (dark, but not pitch black).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/game/GameView.tsx",
-          "frontend/src/game/World/FacilityWorld.tsx",
-          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
-          "frontend/src/ui/Overlays/FadeToBlack.tsx",
-          "frontend/src/ui/Hud/HudShell.tsx"
+          "frontend/src/game/World/FacilityWorld.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/game/GameView.tsx",
-          "frontend/src/game/World/FacilityWorld.tsx",
-          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+          "frontend/src/game/World/FacilityWorld.tsx"
+        ]
+      },
+      {
+        "id": "REQ-18",
+        "summary": "Update renderer exposure/tone-mapping/background settings as needed so the new lighting preset renders consistently and does not crush blacks, while maintaining the intended dark industrial look.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/GameView.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/GameView.tsx"
+        ]
+      },
+      {
+        "id": "REQ-19",
+        "summary": "Verify that UI overlays do not interfere with the goal of a dark-but-visible 3D environment by ensuring the hood vignette remains subtle and FadeToBlack is inactive unless explicitly triggered.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/ui/Overlays/FadeToBlack.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/ui/Overlays/FadeToBlack.tsx"
         ]
       }
     ]
@@ -36,6 +56,8 @@
     "frontend-implementation-plan.json",
     "frontend/src/game/GameView.tsx",
     "frontend/src/game/World/FacilityWorld.tsx",
+    "frontend/src/ui/Hud/HudShell.tsx",
+    "frontend/src/ui/Overlays/FadeToBlack.tsx",
     "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
     "project_state.json",
     "scratch/component-selection.json",

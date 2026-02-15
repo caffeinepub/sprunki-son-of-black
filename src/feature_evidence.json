@@ -2,11 +2,47 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-issue-where-the-3d-facility-map-scene-appears-completely-black-so-the-environment-is-clearly-visible-during-normal-gameplay-while-preserving-the-intended-dark-industrial-horror-mood-this-must-include-verifying-renderer-tone-mapping-exposure-in-frontend-src-game-gameview-tsx-verifying-lighting-material-visibility-in-frontend-src-game-world-facilityworld-tsx-and-ensuring-ui-overlays-hood-vignette-and-fade-to-black-do-not-fully-obscure-the-scene-unless-explicitly-triggered",
-      "featureTitle": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
+      "featureId": "feature-replace-the-current-facility-lighting-setup-with-a-new-global-dark-but-visible-lighting-preset-that-applies-across-the-entire-facility-ensuring-all-core-environment-geometry-floors-walls-props-is-readable-everywhere-while-keeping-an-industrial-horror-mood-dark-but-not-pitch-black",
+      "featureTitle": "Replace the current facility lighting setup with a new global dark-but-visible lighting preset that applies across the entire facility, ensuring all core environment geometry (floors, walls, props) is readable everywhere while keeping an industrial horror mood (dark, but not pitch black).",
       "files": [
-        "frontend/src/game/GameView.tsx",
-        "frontend/src/game/World/FacilityWorld.tsx",
+        "frontend/src/game/World/FacilityWorld.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-renderer-exposure-tone-mapping-background-settings-as-needed-so-the-new-lighting-preset-renders-consistently-and-does-not-crush-blacks-while-maintaining-the-intended-dark-industrial-look",
+      "featureTitle": "Update renderer exposure/tone-mapping/background settings as needed so the new lighting preset renders consistently and does not crush blacks, while maintaining the intended dark industrial look.",
+      "files": [
+        "frontend/src/game/GameView.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-verify-that-ui-overlays-do-not-interfere-with-the-goal-of-a-dark-but-visible-3d-environment-by-ensuring-the-hood-vignette-remains-subtle-and-fadetoblack-is-inactive-unless-explicitly-triggered",
+      "featureTitle": "Verify that UI overlays do not interfere with the goal of a dark-but-visible 3D environment by ensuring the hood vignette remains subtle and FadeToBlack is inactive unless explicitly triggered.",
+      "files": [
+        "frontend/src/ui/Hud/HudShell.tsx",
+        "frontend/src/ui/Overlays/FadeToBlack.tsx",
         "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
       ],
       "components": [
@@ -17,7 +53,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-16"
+        "REQ-19"
       ],
       "confidence": "high"
     }

@@ -13,7 +13,8 @@ import { useState } from 'react';
 export function HudShell() {
   const { isTouchDevice } = useInputMode();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [fadeActive, setFadeActive] = useState(false);
+  // FadeToBlack is explicitly controlled and defaults to inactive
+  const [fadeActive] = useState(false);
 
   return (
     <>
@@ -54,6 +55,7 @@ export function HudShell() {
         </div>
       </div>
 
+      {/* FadeToBlack only renders when explicitly activated */}
       <FadeToBlack active={fadeActive} />
       <SettingsPanel open={settingsOpen} onOpenChange={setSettingsOpen} />
     </>

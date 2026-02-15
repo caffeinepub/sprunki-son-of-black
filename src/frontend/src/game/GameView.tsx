@@ -18,10 +18,10 @@ export function GameView() {
             antialias: false, 
             powerPreference: 'high-performance',
             toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: 1.8,
+            toneMappingExposure: 1.4,
             outputColorSpace: THREE.SRGBColorSpace
           }}
-          scene={{ background: new THREE.Color('#1a1a1a') }}
+          scene={{ background: new THREE.Color('#0a0a0a') }}
           style={{ width: '100%', height: '100%', display: 'block' }}
         >
           <Suspense fallback={null}>

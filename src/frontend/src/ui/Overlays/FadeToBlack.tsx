@@ -27,7 +27,7 @@ export function FadeToBlack({ active = false, duration = 2000 }: FadeToBlackProp
     }
   }, [active, duration]);
 
-  // Only render when active or fading out
+  // Hardened inactive state - only render when explicitly active or actively fading
   if (!active && opacity === 0) return null;
 
   return (

@@ -1,36 +1,73 @@
 {
   "kind": "build_request",
-  "title": "Fix black screen so the 3D facility map is visible",
-  "priority": "high",
+  "title": "Retry: Replace facility lighting system with dark-but-visible global preset",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-16",
-      "text": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
+      "id": "REQ-17",
+      "text": "Replace the current facility lighting setup with a new global dark-but-visible lighting preset that applies across the entire facility, ensuring all core environment geometry (floors, walls, props) is readable everywhere while keeping an industrial horror mood (dark, but not pitch black).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-20"
         ],
         "quotes": [
-          "Make me be able to see the map"
+          "retry the build exactly as before."
         ]
       },
       "acceptanceCriteria": [
-        "On first load, the facility geometry (floors/walls/props) is visibly rendered (not a fully black screen) on both desktop and mobile-sized viewports.",
-        "The hood vignette overlay remains subtle and does not make the scene appear black during normal play.",
-        "The fade-to-black overlay is not active by default and only appears when explicitly triggered; when inactive it does not render or affect scene visibility.",
-        "Changes do not introduce scrollbars and the Canvas remains fullscreen."
+        "In all facility areas (corridor and cafeteria), the player can clearly see walls, floors, and major props without relying on the HUD or overlays.",
+        "The overall scene remains dark and tense (not brightly lit), but no large areas of the environment render as pure black during normal gameplay.",
+        "Lighting changes are implemented primarily in `frontend/src/game/World/FacilityWorld.tsx` and are applied consistently across the whole map (not just one room)."
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Update renderer exposure/tone-mapping/background settings as needed so the new lighting preset renders consistently and does not crush blacks, while maintaining the intended dark industrial look.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "retry the build exactly as before."
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/game/GameView.tsx` produces a stable dark-but-visible image on initial load (no fully black frame after scene mounts).",
+        "Tone mapping/exposure settings do not wash out emissive elements (e.g., keycard emissive) and do not overbrighten the entire scene.",
+        "The scene background remains dark and cohesive with the facility mood (no bright/white clear color)."
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Verify that UI overlays do not interfere with the goal of a dark-but-visible 3D environment by ensuring the hood vignette remains subtle and FadeToBlack is inactive unless explicitly triggered.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "retry the build exactly as before."
+        ]
+      },
+      "acceptanceCriteria": [
+        "During normal gameplay, the hood vignette overlay does not reduce visibility enough to make the 3D environment appear black.",
+        "FadeToBlack does not render or affect the screen unless explicitly activated via its `active` prop.",
+        "Visibility improvements are achieved via 3D environment lighting/exposure rather than by removing the horror vignette entirely."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under `frontend/src/components/ui` (compose them instead).",
-    "Do not modify any immutable paths listed in SYSTEM_CONTEXT (e.g., `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`).",
-    "Backend must remain a single Motoko actor; no new backend services or external databases."
+    "Do not edit files under `frontend/src/components/ui` (Shadcn components are read-only and must be composed, not modified).",
+    "Do not modify immutable frontend hook paths: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`.",
+    "Backend must remain a single Motoko actor; no backend changes are required for this lighting-only retry.",
+    "Use English for any user-facing text."
   ],
   "nonGoals": [
-    "Adding a new minimap UI, level map screen, or navigation system.",
-    "Adding new areas, props, enemies, or new gameplay mechanics beyond what is required to restore visibility."
+    "Do not add new gameplay mechanics, enemies, scenes, or puzzles as part of this lighting retry.",
+    "Do not change narrative/dialogue content.",
+    "Do not introduce new asset pipelines or backend image serving."
   ],
   "imageRequirements": {
     "required": [],

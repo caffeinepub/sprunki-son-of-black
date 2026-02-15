@@ -1,24 +1,32 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T02:08:15.792Z",
-  "summary": "REQ-16 is partially implemented: GameView renderer/tone-mapping exposure and a fullscreen, no-scroll container are updated, FacilityWorld lighting/material visibility is increased, and the hood vignette overlay is made more subtle. However, the diff summary does not provide direct evidence that the fade-to-black overlay is disabled by default and does not render/affect visibility when inactive (the relevant HudShell changes are only mentioned in a summary file, not shown as a code diff).",
-  "missing_requirements": [
+  "generatedAt": "2026-02-15T02:59:43.356Z",
+  "summary": "Diff implements a new global facility lighting preset in FacilityWorld, adjusts renderer tone mapping/exposure/background in GameView, and hardens overlays so Hood vignette is subtle and FadeToBlack is inactive unless explicitly activated. No clear BuildRequest requirements appear unimplemented based on the provided diff summary. Some non-requested project metadata/docs files were also modified.",
+  "missing_requirements": [],
+  "hallucinated_features": [
     {
-      "id": "REQ-16",
-      "requirement": "Ensure UI overlays (especially fade-to-black) do not fully obscure the scene unless explicitly triggered; fade-to-black is not active by default and when inactive it does not render or affect scene visibility.",
-      "reason": "No code diff is shown for the component that controls the fade-to-black overlay state/rendering (e.g., HudShell/Fade overlay). The only mention is in a text summary file, which is not sufficient evidence of implementation.",
+      "description": "Project metadata/state updated (project_state.json) despite request being a lighting-only retry with no mention of updating project state artifacts.",
+      "reason": "BuildRequest focuses on lighting/exposure/overlays changes; modifying project tracking metadata is not requested and not required to satisfy REQ-17/18/19.",
       "evidence": [
-        "frontend-file-summaries.txt (mentions HudShell fadeActive default false, but no corresponding code diff shown)"
+        "project_state.json"
+      ]
+    },
+    {
+      "description": "Frontend file summary artifact updated (frontend-file-summaries.txt) though not requested as part of lighting preset changes.",
+      "reason": "BuildRequest does not request updating summary/documentation artifacts; only gameplay rendering/overlay behavior changes are requested.",
+      "evidence": [
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "hallucinated_features": [],
-  "confidence": 0.62,
+  "confidence": 0.74,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/game/GameView.tsx",
     "frontend/src/game/World/FacilityWorld.tsx",
+    "frontend/src/ui/Hud/HudShell.tsx",
+    "frontend/src/ui/Overlays/FadeToBlack.tsx",
     "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
     "project_state.json"
   ]

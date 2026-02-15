@@ -1,16 +1,18 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 11,
   "summary": "3D first-person horror/survival narrative game \"Sprunki: Son of Black\" set in a photorealistic industrial facility (UE5 style) with a cartoonish antagonist \"The Green Hood,\" featuring mobile controls, chase/stealth gameplay, bottom-screen text dialogue, and a signature hood-fall/look-away stress mechanic.",
   "architectural_notes": [
     "Game is 3D first-person horror/survival with no combat; progression via stealth, barricades, and puzzles.",
     "Visual direction: photorealistic industrial facility contrasted with stylized/cartoonish antagonist.",
     "UI uses bottom-screen text dialogue box (RPG-like) as primary narrative/antagonist communication.",
     "Signature gameplay mechanic: hood-fall/look-away reaction tied to stress/penalty system.",
-    "Target includes mobile controls (touch input)."
+    "Target includes mobile controls (touch input).",
+    "Lighting direction decision: replace the facility’s current lighting setup entirely with a new global dark-but-visible lighting solution applied everywhere (not area-specific)."
   ],
   "known_issues": [
-    "Map/scene is rendering completely black (likely lighting/material/camera/exposure issue), making the environment not visible."
+    "Map/scene is rendering completely black (likely lighting/material/camera/exposure issue), making the environment not visible.",
+    "Build attempt to replace lighting setup failed to execute (\"AI couldn't implement that\"), requiring a retry."
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -131,6 +133,30 @@
       "title": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
       "reqIds": [
         "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-facility-lighting-setup-with-a-new-global-dark-but-visible-lighting-preset-that-applies-across-the-entire-facility-ensuring-all-core-environment-geometry-floors-walls-props-is-readable-everywhere-while-keeping-an-industrial-horror-mood-dark-but-not-pitch-black",
+      "title": "Replace the current facility lighting setup with a new global dark-but-visible lighting preset that applies across the entire facility, ensuring all core environment geometry (floors, walls, props) is readable everywhere while keeping an industrial horror mood (dark, but not pitch black).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-renderer-exposure-tone-mapping-background-settings-as-needed-so-the-new-lighting-preset-renders-consistently-and-does-not-crush-blacks-while-maintaining-the-intended-dark-industrial-look",
+      "title": "Update renderer exposure/tone-mapping/background settings as needed so the new lighting preset renders consistently and does not crush blacks, while maintaining the intended dark industrial look.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-ui-overlays-do-not-interfere-with-the-goal-of-a-dark-but-visible-3d-environment-by-ensuring-the-hood-vignette-remains-subtle-and-fadetoblack-is-inactive-unless-explicitly-triggered",
+      "title": "Verify that UI overlays do not interfere with the goal of a dark-but-visible 3D environment by ensuring the hood vignette remains subtle and FadeToBlack is inactive unless explicitly triggered.",
+      "reqIds": [
+        "REQ-19"
       ],
       "version": 1
     }
