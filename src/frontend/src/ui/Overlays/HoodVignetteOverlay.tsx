@@ -8,7 +8,7 @@ export function HoodVignetteOverlay() {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         mixBlendMode: 'multiply',
-        opacity: 0.4
+        opacity: 0.25
       }}
     />
   );

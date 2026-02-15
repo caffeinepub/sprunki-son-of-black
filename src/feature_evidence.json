@@ -2,12 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-make-the-3d-game-map-react-three-fiber-canvas-render-fullscreen-by-ensuring-the-gameview-container-fills-the-viewport-width-and-height-and-the-app-root-elements-html-body-root-allow-100-height-without-introducing-scrollbars",
-      "featureTitle": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
+      "featureId": "feature-fix-the-issue-where-the-3d-facility-map-scene-appears-completely-black-so-the-environment-is-clearly-visible-during-normal-gameplay-while-preserving-the-intended-dark-industrial-horror-mood-this-must-include-verifying-renderer-tone-mapping-exposure-in-frontend-src-game-gameview-tsx-verifying-lighting-material-visibility-in-frontend-src-game-world-facilityworld-tsx-and-ensuring-ui-overlays-hood-vignette-and-fade-to-black-do-not-fully-obscure-the-scene-unless-explicitly-triggered",
+      "featureTitle": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
       "files": [
-        "frontend/index.html",
         "frontend/src/game/GameView.tsx",
-        "frontend/src/index.css"
+        "frontend/src/game/World/FacilityWorld.tsx",
+        "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,7 +17,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-15"
+        "REQ-16"
       ],
       "confidence": "high"
     }

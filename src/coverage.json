@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T02:02:46.003Z",
+  "generatedAt": "2026-02-15T02:08:15.795Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,18 +11,20 @@
     "implemented": 1,
     "items": [
       {
-        "id": "REQ-15",
-        "summary": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
+        "id": "REQ-16",
+        "summary": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/game/GameView.tsx",
-          "frontend/src/index.css",
-          "frontend/index.html"
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+          "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx"
         ],
         "matchedFiles": [
           "frontend/src/game/GameView.tsx",
-          "frontend/src/index.css",
-          "frontend/index.html"
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
         ]
       }
     ]
@@ -32,10 +34,9 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
     "frontend/src/game/GameView.tsx",
-    "frontend/src/index.css",
+    "frontend/src/game/World/FacilityWorld.tsx",
+    "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,34 +1,36 @@
 {
   "kind": "build_request",
-  "title": "Make the 3D map/game view render fullscreen",
-  "priority": "normal",
+  "title": "Fix black screen so the 3D facility map is visible",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-15",
-      "text": "Make the 3D game map (React Three Fiber Canvas) render fullscreen by ensuring the GameView container fills the viewport (width and height) and the app root elements (html/body/#root) allow 100% height without introducing scrollbars.",
+      "id": "REQ-16",
+      "text": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-6"
         ],
         "quotes": [
-          "Make the map fullscreened"
+          "Make me be able to see the map"
         ]
       },
       "acceptanceCriteria": [
-        "On desktop and mobile, the 3D scene fills the entire visible viewport (no letterboxing caused by container sizing).",
-        "No page scrollbars appear during normal gameplay due to layout sizing (unless intentionally added elsewhere).",
-        "HUD overlays (stress indicator, settings button, dialogue box, mobile controls) remain positioned correctly on top of the fullscreen canvas."
+        "On first load, the facility geometry (floors/walls/props) is visibly rendered (not a fully black screen) on both desktop and mobile-sized viewports.",
+        "The hood vignette overlay remains subtle and does not make the scene appear black during normal play.",
+        "The fade-to-black overlay is not active by default and only appears when explicitly triggered; when inactive it does not render or affect scene visibility.",
+        "Changes do not introduce scrollbars and the Canvas remains fullscreen."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything under frontend/src/components/ui (immutable paths).",
-    "Keep the backend as a single Motoko actor; no backend changes are required for this request."
+    "Do not edit files under `frontend/src/components/ui` (compose them instead).",
+    "Do not modify any immutable paths listed in SYSTEM_CONTEXT (e.g., `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`).",
+    "Backend must remain a single Motoko actor; no new backend services or external databases."
   ],
   "nonGoals": [
-    "Do not change scene lighting, tone mapping, or world layout as part of this fullscreen change.",
-    "Do not add new gameplay features, scenes, or UI panels beyond what is needed to support fullscreen rendering."
+    "Adding a new minimap UI, level map screen, or navigation system.",
+    "Adding new areas, props, enemies, or new gameplay mechanics beyond what is required to restore visibility."
   ],
   "imageRequirements": {
     "required": [],

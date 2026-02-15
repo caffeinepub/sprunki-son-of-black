@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Make the 3D game map view render fullscreen across desktop and mobile without introducing scrollbars, while keeping HUD overlays correctly positioned above the canvas.
+**Goal:** Fix the black-screen rendering issue so the 3D facility scene is clearly visible during gameplay while keeping the intended dark industrial-horror mood.
 
 **Planned changes:**
-- Update the GameView (or equivalent) layout/CSS so the React Three Fiber Canvas container fills the viewport (100vw/100vh or equivalent) without letterboxing from parent sizing.
-- Ensure root layout elements allow full-height rendering (e.g., html/body/app root set to 100% height) and prevent unintended overflow that causes scrollbars.
-- Verify/adjust HUD overlay positioning/z-index so existing UI (stress indicator, settings button, dialogue box, mobile controls) remains correctly anchored on top of the fullscreen canvas.
+- Verify and adjust renderer configuration in `frontend/src/game/GameView.tsx` (tone mapping, exposure, and related render settings) to prevent the scene from rendering fully black by default.
+- Verify lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx` so facility geometry renders visibly under normal gameplay conditions.
+- Ensure UI overlays (hood vignette and fade-to-black) do not obscure the scene during normal play; confirm fade-to-black is inactive by default and only appears when explicitly triggered.
+- Confirm the game Canvas remains fullscreen with no scrollbars on both desktop and mobile-sized viewports.
 
-**User-visible outcome:** The 3D scene fills the entire visible screen on desktop and mobile with no unwanted page scrollbars, and the HUD remains properly positioned over the fullscreen game view.
+**User-visible outcome:** On load, players can see the 3D facility (floors/walls/props) on desktop and mobile; the vignette stays subtle, and fade-to-black only appears when triggered.

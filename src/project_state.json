@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
+  "projectStateVersion": 9,
   "summary": "3D first-person horror/survival narrative game \"Sprunki: Son of Black\" set in a photorealistic industrial facility (UE5 style) with a cartoonish antagonist \"The Green Hood,\" featuring mobile controls, chase/stealth gameplay, bottom-screen text dialogue, and a signature hood-fall/look-away stress mechanic.",
   "architectural_notes": [
     "Game is 3D first-person horror/survival with no combat; progression via stealth, barricades, and puzzles.",
@@ -12,7 +12,7 @@
   "known_issues": [
     "Map/scene is rendering completely black (likely lighting/material/camera/exposure issue), making the environment not visible."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-coherent-first-person-horror-game-frontend-theme-and-apply-it-consistently-across-ui-menus-hud-dialogue-box-buttons-gritty-industrial-clinical-facility-vibe-with-high-contrast-warning-colors-readable-typography-and-a-distinct-jagged-pixel-horror-font-style-for-threat-text-do-not-use-a-blue-purple-theme",
@@ -125,6 +125,14 @@
         "REQ-15"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-the-issue-where-the-3d-facility-map-scene-appears-completely-black-so-the-environment-is-clearly-visible-during-normal-gameplay-while-preserving-the-intended-dark-industrial-horror-mood-this-must-include-verifying-renderer-tone-mapping-exposure-in-frontend-src-game-gameview-tsx-verifying-lighting-material-visibility-in-frontend-src-game-world-facilityworld-tsx-and-ensuring-ui-overlays-hood-vignette-and-fade-to-black-do-not-fully-obscure-the-scene-unless-explicitly-triggered",
+      "title": "Fix the issue where the 3D facility map/scene appears completely black so the environment is clearly visible during normal gameplay, while preserving the intended dark industrial-horror mood. This must include verifying renderer/tone-mapping exposure in `frontend/src/game/GameView.tsx`, verifying lighting/material visibility in `frontend/src/game/World/FacilityWorld.tsx`, and ensuring UI overlays (hood vignette and fade-to-black) do not fully obscure the scene unless explicitly triggered.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -188,6 +196,15 @@
       "id": "AR-20",
       "summary": "Make the 3D map/game view render fullscreen (expand canvas to fill viewport; adjust UI layout accordingly).",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Fix map visibility: investigate and resolve the scene rendering black so the facility environment is visible (lighting/exposure/tone mapping/overlays).",
+      "reqIds": [
+        "REQ-13",
+        "REQ-14"
+      ],
       "status": "pending"
     }
   ],
