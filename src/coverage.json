@@ -1,0 +1,352 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T01:50:24.476Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 12,
+    "implemented": 11,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create a coherent first-person horror game frontend theme and apply it consistently across UI (menus, HUD, dialogue box, buttons): gritty industrial/clinical facility vibe with high-contrast warning colors, readable typography, and a distinct jagged/pixel-horror font style for threat text. Do not use a blue/purple theme.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Script and implement the three key scenes as a playable vertical slice: (1) First encounter in a locked cafeteria with the bottom text \"You look... crunchy.\" and enemy staring in a corner; (2) Corridor chase where the hood falls off mid-chase and speed increases; (3) Ending where player reaches the surface but final text shows \"Eat you whole\" and fades to black implying failure.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Scenes/sceneIds.ts",
+          "frontend/src/game/Scenes/SceneDirector.tsx",
+          "frontend/src/game/Scenes/sceneScripts.ts",
+          "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "frontend/src/game/State/useScenePersistence.ts",
+          "frontend/src/game/GameView.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Scenes/SceneDirector.tsx",
+          "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "frontend/src/game/GameView.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Backend: implement persistent player/session state in the single Motoko actor to support the vertical slice, including at minimum: player stress level, puzzle progression flags (e.g., keycard/code found), and current scene/checkpoint. Expose query/update methods used by the frontend to load/save this state.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Add required static generated images to the frontend and use them in UI: a dialogue box frame/background, mobile control icons (joystick base/knob, interact button), and a subtle vignette/hood overlay texture. Store them under frontend/public/assets/generated and reference them directly from the frontend (no backend image serving).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png",
+          "frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png",
+          "frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png",
+          "frontend/public/assets/generated/mobile-interact-button.dim_256x256.png",
+          "frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png",
+          "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "frontend/src/ui/Controls/InteractButton.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png",
+          "frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png",
+          "frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png",
+          "frontend/public/assets/generated/mobile-interact-button.dim_256x256.png",
+          "frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png",
+          "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "frontend/src/ui/Controls/InteractButton.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement a playable 3D first-person scene of an industrial facility (photorealistic/realistic lighting feel) using Three.js + React Three Fiber, including: corridor/cafeteria spaces, basic props, flickering lights, and an overall tense atmosphere. Use a first-person camera with limited vision (hood-shadow/vignette effect).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/package.json",
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/game/Camera/FirstPersonRig.tsx",
+          "frontend/src/game/Rendering/GameCanvas.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add mobile-first controls for first-person movement and interaction: on-screen joystick for movement, look controls (swipe/drag), and an interact button for context actions (e.g., open door, hide, barricade, read prompt). Ensure it also remains usable on desktop (WASD/mouse optional) without requiring mobile.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Input/useInputMode.ts",
+          "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "frontend/src/ui/Controls/InteractButton.tsx",
+          "frontend/src/game/Input/useTouchLook.ts",
+          "frontend/src/game/Input/useKeyboardMouse.ts",
+          "frontend/src/game/Player/PlayerController.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Input/useInputMode.ts",
+          "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "frontend/src/ui/Controls/InteractButton.tsx",
+          "frontend/src/game/Input/useTouchLook.ts",
+          "frontend/src/game/Input/useKeyboardMouse.ts",
+          "frontend/src/game/Player/PlayerController.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Implement a bottom-screen dialogue/thought/threat system: a text box that appears at the bottom of the screen with jagged horror styling, supports timed lines, and can partially block the view as described. Provide an API to trigger lines from scripted events and AI events.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Dialogue/DialogueContext.tsx",
+          "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "frontend/src/game/Dialogue/scriptedLines.ts",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Dialogue/DialogueContext.tsx",
+          "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "frontend/src/game/Dialogue/scriptedLines.ts",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Create the antagonist character \"The Green Hood\" as a stylized/cartoony 3D entity contrasted against the realistic facility. Include: tall humanoid hoodie silhouette, dark green ragged hood, glowing neon eyes, and a hidden mouth that can be revealed (Dirty-Bubble-like circular brown wrinkled mouth with jagged lips).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "frontend/src/game/World/FacilityWorld.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "frontend/src/game/World/FacilityWorld.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Implement enemy AI state machine for The Green Hood with at least these states: idle/stare encounter, patrol/search, chase. Include proximity detection, line-of-sight considerations, and a chase escalation for scripted moments. Enemy does not speak; instead triggers threat text through the dialogue system.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "frontend/src/game/Gameplay/useDetectionRules.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Implement the signature \"hood fall\" mechanic: during chase or jump-scare moments, the enemy hood can fall to reveal the mouth. When revealed, if the player looks at the mouth (camera facing it within a short reaction window), the enemy reacts with \"brutal\" speed to pull the hood back up and the player receives a stress penalty. Provide clear feedback when stress increases.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+          "frontend/src/game/State/usePlayerState.ts",
+          "frontend/src/ui/Hud/StressIndicator.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+          "frontend/src/game/State/usePlayerState.ts",
+          "frontend/src/ui/Hud/StressIndicator.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx",
+          "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Implement no-weapons survival gameplay interactions: (1) hide spots (e.g., locker/cabinet) that break detection, (2) barricade doors to delay enemy pursuit, and (3) simple puzzle gating (e.g., find a keycard/code) to unlock new facility areas.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Interactions/interactionTypes.ts",
+          "frontend/src/game/Interactions/useInteractionContext.ts",
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/game/Gameplay/progressionSync.ts",
+          "frontend/src/ui/Controls/InteractPrompt.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/World/FacilityWorld.tsx",
+          "frontend/src/ui/Controls/InteractPrompt.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Add audio systems for tension and telegraphing: a low-frequency hum that intensifies when The Green Hood is near, plus a mouth-smacking sound when he gets close (especially during mouth-reveal moments). Provide volume controls/mute in settings.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/game/Audio/useTensionAudio.ts",
+          "frontend/src/game/Audio/audioSettingsStore.ts",
+          "frontend/src/ui/Settings/SettingsPanel.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/game/Audio/useTensionAudio.ts",
+          "frontend/src/game/Audio/audioSettingsStore.ts",
+          "frontend/src/ui/Settings/SettingsPanel.tsx",
+          "frontend/src/ui/Hud/HudShell.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png",
+    "frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png",
+    "frontend/public/assets/generated/mobile-interact-button.dim_256x256.png",
+    "frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png",
+    "frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/game/Audio/audioSettingsStore.ts",
+    "frontend/src/game/Audio/useTensionAudio.ts",
+    "frontend/src/game/Dialogue/DialogueContext.tsx",
+    "frontend/src/game/Dialogue/scriptedLines.ts",
+    "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+    "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+    "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts",
+    "frontend/src/game/GameView.tsx",
+    "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+    "frontend/src/game/Input/useInputMode.ts",
+    "frontend/src/game/Input/useKeyboardMouse.ts",
+    "frontend/src/game/Input/useTouchLook.ts",
+    "frontend/src/game/Player/PlayerController.tsx",
+    "frontend/src/game/Scenes/SceneDirector.tsx",
+    "frontend/src/game/State/usePlayerState.ts",
+    "frontend/src/game/World/FacilityWorld.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/ui/Controls/InteractButton.tsx",
+    "frontend/src/ui/Controls/InteractPrompt.tsx",
+    "frontend/src/ui/Controls/MobileJoystick.tsx",
+    "frontend/src/ui/Dialogue/DialogueBox.tsx",
+    "frontend/src/ui/Hud/HudShell.tsx",
+    "frontend/src/ui/Hud/StressIndicator.tsx",
+    "frontend/src/ui/Overlays/FadeToBlack.tsx",
+    "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+    "frontend/src/ui/Settings/SettingsPanel.tsx",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

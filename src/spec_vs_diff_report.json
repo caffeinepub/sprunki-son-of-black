@@ -1,0 +1,172 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T01:50:24.471Z",
+  "summary": "Diff adds a Motoko backend state actor plus a basic R3F first-person scene with cafeteria/corridor geometry, flickering light, a Green Hood model/entity with simple distance-based AI, a dialogue queue context with some scripted lines, and a proximity-based hum audio hook with persisted volume/mute settings. Several requested UI/theme elements, mobile joystick/interact UI, vignette overlay, full hood-fall-to-stress loop, survival interactions, key scene scripting, required generated images, and some AI details are not evidenced in the provided diff summary.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Create and apply a coherent gritty industrial/clinical horror UI theme across menus/HUD/dialogue/buttons with jagged/pixel-horror threat text and avoid blue/purple as primary theme colors.",
+      "reason": "The diff shows ThemeProvider usage but no evidence of a defined theme system (palette/typography), jagged/pixel-horror font treatment, or consistent styling across UI components/menus/HUD.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/game/GameView.tsx"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Include a persistent limited-vision hood-shadow/vignette effect in the first-person view.",
+      "reason": "The 3D facility scene and flickering light are present, but there is no evidence of a vignette/hood overlay post-process or HUD overlay applied during gameplay.",
+      "evidence": [
+        "frontend/src/game/GameView.tsx",
+        "frontend/src/game/World/FacilityWorld.tsx"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Add mobile-first controls including an on-screen movement joystick and an on-screen Interact button, while remaining usable on desktop.",
+      "reason": "Touch look and keyboard/mouse input hooks exist, but there is no evidence of rendered on-screen joystick UI or an Interact button UI that sets movement/interact state; PlayerController consumes moveInput/interactPressed but touch move input is never populated in the shown code.",
+      "evidence": [
+        "frontend/src/game/Input/useInputMode.ts",
+        "frontend/src/game/Input/useTouchLook.ts",
+        "frontend/src/game/Input/useKeyboardMouse.ts",
+        "frontend/src/game/Player/PlayerController.tsx"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Implement a bottom-screen jagged-styled dialogue box component that can occlude part of the view and is programmatically showable/hideable with queued timed lines; include the three specified lines.",
+      "reason": "A DialogueContext queue exists and scripted lines are defined, but there is no evidence of an actual rendered dialogue box UI (bottom placement, occlusion, styling). Also the line \"I will eat you whole,\" (with comma) is not evidenced exactly; the diff contains \"I will eat you whole\" and \"Eat you whole\".",
+      "evidence": [
+        "frontend/src/game/Dialogue/DialogueContext.tsx",
+        "frontend/src/game/Dialogue/scriptedLines.ts",
+        "frontend/src/game/GameView.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Enemy AI state machine with idle/stare, patrol/search, chase including proximity detection, line-of-sight considerations, and chase escalation for scripted moments; threat text during encounters/chase.",
+      "reason": "AI states exist and switch based on distance, and it queues a threat line, but there is no evidence of line-of-sight checks, hiding/barricade affecting detection, or scripted chase escalation triggers integrated with scene scripting.",
+      "evidence": [
+        "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Hood fall mechanic integrated into chase/jumpscare: hood reveals mouth; if player looks at mouth within a short window, enemy rapidly covers hood and stress increases; stress persisted in backend and shown in HUD with feedback.",
+      "reason": "A hood-fall helper (look detection/event window) exists and GreenHoodEntity supports hoodRevealed, but there is no evidence it is triggered during chase, no evidence of the rapid hood-cover reaction, no evidence of stress penalty being applied/persisted via backend on look, and no evidence of stress HUD/feedback.",
+      "evidence": [
+        "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+        "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+        "frontend/src/game/State/usePlayerState.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "No-weapons survival interactions: functional hide spot, barricadable door delaying enemy, and puzzle gating (keycard/code pickup unlocking area), with backend-stored progression reloadable.",
+      "reason": "Backend fields/methods exist for keycard/code/save spot/barricades, and FacilityWorld marks meshes with userData types (hidespot/door/keycard), but there is no evidence of interaction logic (Interacts, entering hide, barricading door with delay behavior, picking up keycard/code, locked gate unlocking) wired to input or AI detection.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/game/State/usePlayerState.ts",
+        "frontend/src/game/World/FacilityWorld.tsx",
+        "frontend/src/game/Player/PlayerController.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Add tension audio (hum intensifies near enemy) plus mouth-smacking sound near/mouth-reveal, and provide settings UI for mute/volume.",
+      "reason": "A proximity-based hum via oscillator exists and settings state exists, but there is no evidence of a mouth-smacking sound implementation and no evidence of a settings UI component that lets the user change volume/mute.",
+      "evidence": [
+        "frontend/src/game/Audio/useTensionAudio.ts",
+        "frontend/src/game/Audio/audioSettingsStore.ts"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Implement three key playable scenes with deterministic transitions: cafeteria encounter with \"You look... crunchy.\" and enemy staring; corridor chase with mid-chase hood fall and speed increase; ending at surface with \"Eat you whole\" and fade to black.",
+      "reason": "SceneDirector only queues the intro line; there is no evidence of enemy being scripted to stare in scene 1, no corridor chase trigger/transition logic, no mid-chase hood fall trigger or speed escalation tied to scene 2, and no ending trigger with fade-to-black.",
+      "evidence": [
+        "frontend/src/game/Scenes/SceneDirector.tsx",
+        "frontend/src/game/World/FacilityWorld.tsx",
+        "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Backend persistence methods should store structured state (stress, progression flags, checkpoint/scene) and frontend must persist changes when stress/progression/checkpoint advances.",
+      "reason": "Backend provides state and mutation methods, and frontend loads state, but the shown frontend does not evidence calls when stress changes from gameplay (hood-fall), progression changes via actual pickups/gates, or checkpoint advances via deterministic scene transitions.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/game/State/usePlayerState.ts",
+        "frontend/src/game/Scenes/SceneDirector.tsx"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Add required generated images under frontend/public/assets/generated and use them in UI: dialogue box frame/background, joystick icons, interact button icon, and hood vignette overlay texture.",
+      "reason": "No generated image assets are evidenced in the diff summary, and there is no evidence of UI components referencing those asset paths for dialogue box/mobile controls/vignette overlay.",
+      "evidence": [
+        "frontend/src/game/GameView.tsx",
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Introduced next-themes ThemeProvider wrapping the app.",
+      "reason": "The BuildRequest asks for a consistent horror theme, but does not request use of next-themes specifically; this is an implementation choice not explicitly required.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "Implemented persisted audio settings using Zustand persist middleware.",
+      "reason": "The BuildRequest requires volume controls/mute in settings UI, but does not specify Zustand, persistence, or localStorage-based storage; this goes beyond the stated requirement.",
+      "evidence": [
+        "frontend/src/game/Audio/audioSettingsStore.ts"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/game/Audio/audioSettingsStore.ts",
+    "frontend/src/game/Audio/useTensionAudio.ts",
+    "frontend/src/game/Dialogue/DialogueContext.tsx",
+    "frontend/src/game/Dialogue/scriptedLines.ts",
+    "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+    "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+    "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts",
+    "frontend/src/game/GameView.tsx",
+    "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+    "frontend/src/game/Input/useInputMode.ts",
+    "frontend/src/game/Input/useKeyboardMouse.ts",
+    "frontend/src/game/Input/useTouchLook.ts",
+    "frontend/src/game/Player/PlayerController.tsx",
+    "frontend/src/game/Scenes/SceneDirector.tsx",
+    "frontend/src/game/State/usePlayerState.ts",
+    "frontend/src/game/World/FacilityWorld.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/ui/Controls/InteractButton.tsx",
+    "frontend/src/ui/Controls/InteractPrompt.tsx",
+    "frontend/src/ui/Controls/MobileJoystick.tsx",
+    "frontend/src/ui/Dialogue/DialogueBox.tsx",
+    "frontend/src/ui/Hud/HudShell.tsx",
+    "frontend/src/ui/Hud/StressIndicator.tsx",
+    "frontend/src/ui/Overlays/FadeToBlack.tsx",
+    "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+    "frontend/src/ui/Settings/SettingsPanel.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

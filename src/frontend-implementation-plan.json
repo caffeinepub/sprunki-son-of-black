@@ -1,0 +1,417 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Sprunki: Son of Black — 3D first-person horror vertical slice (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Define and apply a consistent gritty industrial/clinical horror UI theme with high-contrast warning colors and jagged threat-text styling (no blue/purple primary theme).",
+      "acceptanceCriteria": [
+        "UI across the app uses one consistent color palette, spacing system, and typography choices.",
+        "Threat/dialogue text uses a jagged, horror-appropriate font treatment (via font file or CSS styling) and is readable on mobile.",
+        "Theme avoids default/template styling and avoids blue/purple as the primary theme colors."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styling entry point for the industrial/clinical horror theme (CSS variables for palette, typography defaults, spacing rhythm, and threat-text jagged treatment). Ensure primary theme colors avoid blue/purple and prioritize warning hues (e.g., hazard yellow, oxidized red, sickly green accents) with readable contrast."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme tokens (as needed) to align with the new horror UI palette/typography variables and ensure consistent usage across HUD, menus, and dialogue UI."
+        },
+        {
+          "path": "frontend/src/ui/Hud/HudShell.tsx",
+          "operation": "create",
+          "description": "Create a shared HUD/UI layout shell that applies consistent spacing, typography, and theme classes for all overlays (dialogue box, stress indicator, mobile controls, settings)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the root app composition that mounts the gameplay view and wraps it with the themed HUD shell so the theme is applied consistently across the prototype."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Render a playable 3D first-person industrial facility scene using Three.js + React Three Fiber with cafeteria + corridor areas, tense lighting, flicker effects, and a persistent hood/vignette limited-vision overlay.",
+      "acceptanceCriteria": [
+        "A 3D scene renders in the browser with a controllable first-person camera.",
+        "Player view includes a persistent limited-vision effect (e.g., vignette/hood shadow) that reduces peripheral visibility.",
+        "Facility includes at least two distinct areas: a cafeteria and a corridor segment suitable for a chase.",
+        "Lighting includes at least one flickering light effect and overall low/industrial ambience."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add required 3D dependencies for a 3D game: three, @react-three/fiber, and @react-three/drei. Ensure versions are compatible with the existing React build setup."
+        },
+        {
+          "path": "frontend/src/game/World/FacilityWorld.tsx",
+          "operation": "create",
+          "description": "Create the facility environment (realistic/industrial materials approximation) with two distinct zones (cafeteria + corridor) and basic props (tables, counters, doors, lockers). Implement low/industrial ambience lighting and at least one flickering light behavior."
+        },
+        {
+          "path": "frontend/src/game/Camera/FirstPersonRig.tsx",
+          "operation": "create",
+          "description": "Create the first-person camera rig (position + yaw/pitch) that can be driven by input and constrained to reasonable pitch limits for mobile usability."
+        },
+        {
+          "path": "frontend/src/game/Rendering/GameCanvas.tsx",
+          "operation": "create",
+          "description": "Create the React Three Fiber Canvas wrapper that hosts the 3D world, camera rig, and gameplay entities with performance-minded defaults for mobile."
+        },
+        {
+          "path": "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+          "operation": "create",
+          "description": "Implement persistent limited-vision overlay using the generated texture at frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png, layered over the 3D view and visible during gameplay."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add mobile-first first-person controls: on-screen joystick for movement, swipe/drag look controls, and a context Interact button; keep desktop usable with keyboard/mouse fallback.",
+      "acceptanceCriteria": [
+        "On touch devices, the player can move and look around using on-screen controls.",
+        "An on-screen Interact button triggers context interactions when available.",
+        "Controls are responsive and do not block critical HUD elements (dialogue box, stress indicator).",
+        "On non-touch devices, basic movement/look is still possible (keyboard/mouse or fallback controls)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Input/useInputMode.ts",
+          "operation": "create",
+          "description": "Create a hook to detect/track active input mode (touch vs. mouse/keyboard) and expose a unified control state for movement/look/interact."
+        },
+        {
+          "path": "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "operation": "create",
+          "description": "Create an on-screen joystick component using the generated images frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png and frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png. Ensure placement avoids overlapping dialogue/stress UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/ui/Controls/InteractButton.tsx",
+          "operation": "create",
+          "description": "Create an on-screen Interact button using frontend/public/assets/generated/mobile-interact-button.dim_256x256.png that triggers the current context action. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/Input/useTouchLook.ts",
+          "operation": "create",
+          "description": "Implement swipe/drag look controls for touch devices (right-side drag area or non-joystick region) producing yaw/pitch deltas for the first-person rig."
+        },
+        {
+          "path": "frontend/src/game/Input/useKeyboardMouse.ts",
+          "operation": "create",
+          "description": "Implement desktop fallback input (WASD movement + mouse look, with a safe fallback if pointer lock is not used)."
+        },
+        {
+          "path": "frontend/src/game/Player/PlayerController.tsx",
+          "operation": "create",
+          "description": "Create player controller that consumes unified input (touch + desktop) to move the player collider/position, drive the first-person camera rig, and dispatch Interact presses to the interaction system."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement a bottom-screen dialogue/thought/threat UI system with jagged horror styling, timed/queued lines, and a triggerable API usable by scripted and AI events.",
+      "acceptanceCriteria": [
+        "Dialogue box can be shown/hidden programmatically and supports queued lines.",
+        "Text box appears at the bottom, visually distinct, and can occlude part of the 3D view.",
+        "At least three lines are implemented from the script: \"You look... crunchy.\", \"I will eat you whole,\" and \"No skin left.\"",
+        "System supports both one-off lines (scene trigger) and reactive lines (enemy proximity/encounter)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Dialogue/DialogueContext.tsx",
+          "operation": "create",
+          "description": "Create a dialogue provider with a small API (queueLine, queueLines, clear, show/hide) supporting timed display and queueing for both scripted and AI-triggered threat text."
+        },
+        {
+          "path": "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "operation": "create",
+          "description": "Create the bottom-screen dialogue box UI using frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png as the frame/background and applying the jagged threat-text styling defined in the theme. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/Dialogue/scriptedLines.ts",
+          "operation": "create",
+          "description": "Define and export required scripted lines including: \"You look... crunchy.\", \"I will eat you whole,\" and \"No skin left.\" so both scenes and AI can reuse them consistently."
+        },
+        {
+          "path": "frontend/src/ui/Hud/HudShell.tsx",
+          "operation": "modify",
+          "description": "Wire the DialogueBox into the HUD overlay so it reliably occludes part of the 3D view at the bottom of the screen on both mobile and desktop."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Create The Green Hood as a stylized/cartoony 3D enemy entity with glowing eyes and a revealable Dirty-Bubble-like mouth, contrasted against a realistic facility environment.",
+      "acceptanceCriteria": [
+        "Enemy character is visible in the 3D scene with a clear stylized look distinct from environment materials/lighting.",
+        "Eyes visibly glow in darkness (emissive material effect).",
+        "Mouth state exists (hidden vs revealed) and is visually represented when revealed.",
+        "Character can be positioned/animated/moved by AI logic (even with simple placeholder animations)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+          "operation": "create",
+          "description": "Create a stylized Green Hood model from primitive meshes (tall hoodie silhouette, ragged dark green hood, neon emissive eyes, and a mouth mesh that can toggle hidden/revealed). Keep materials intentionally cartoony/flat compared to the facility."
+        },
+        {
+          "path": "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "operation": "create",
+          "description": "Create the enemy entity wrapper that hosts the model, exposes position/velocity hooks for AI, and provides an imperative way to toggle hood/mouth visibility state."
+        },
+        {
+          "path": "frontend/src/game/World/FacilityWorld.tsx",
+          "operation": "modify",
+          "description": "Place the Green Hood entity in the world so it is visible during the vertical slice (including a cafeteria corner placement for the first encounter)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement The Green Hood AI state machine (idle/stare, patrol/search, chase) with proximity + basic line-of-sight detection and threat-text triggers via the dialogue system.",
+      "acceptanceCriteria": [
+        "Enemy can patrol or move in the scene and switch to chase when the player is detected or when a scripted chase begins.",
+        "During encounter/chase moments, threat text appears via the dialogue system (no spoken dialogue required).",
+        "Chase state visibly increases enemy speed compared to patrol/idle.",
+        "Player can temporarily evade by breaking line-of-sight and using hiding/barricade mechanics (REQ-8)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts",
+          "operation": "create",
+          "description": "Implement a simple AI state machine for Green Hood (idle/stare, patrol/search, chase) driven by distance checks and basic line-of-sight approximations. Trigger threat lines through the DialogueContext for encounter/chase beats."
+        },
+        {
+          "path": "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "operation": "modify",
+          "description": "Wire the AI controller into the Green Hood entity so it can switch states, adjust movement speed (chase faster than patrol), and request threat-text output."
+        },
+        {
+          "path": "frontend/src/game/Gameplay/useDetectionRules.ts",
+          "operation": "create",
+          "description": "Centralize detection rules (distance thresholds, line-of-sight checks, and hidden/barricade modifiers) so AI and interactions share consistent logic."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement the hood-fall stress mechanic: mid-chase hood reveal, camera-look detection within a short window, rapid hood-cover reaction, and stress penalty with HUD feedback (persisted via existing backend interface calls).",
+      "acceptanceCriteria": [
+        "Enemy has a controllable hood state (on/off) that can change mid-chase.",
+        "When mouth is revealed, the game detects whether the player camera is looking at it within a configured short time window.",
+        "If the player looks, enemy performs a rapid hood-cover reaction and player stress increases; if player looks away/hides, stress penalty is avoided or reduced.",
+        "Stress value is persisted in backend state and reflected in the HUD (e.g., meter/indicator)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Gameplay/hoodFallMechanic.ts",
+          "operation": "create",
+          "description": "Implement the hood-fall mechanic: trigger mouth reveal, start a short reaction timer, compute whether the camera is facing the mouth, and if so force a rapid hood-cover reaction and apply a stress penalty."
+        },
+        {
+          "path": "frontend/src/game/State/usePlayerState.ts",
+          "operation": "create",
+          "description": "Create a small player-state hook that loads initial state via backend.getPlayerState() and persists stress changes via backend.updateStress(). Use the provided backend interface typings and the app’s existing infrastructure for canister connection (core-infrastructure)."
+        },
+        {
+          "path": "frontend/src/ui/Hud/StressIndicator.tsx",
+          "operation": "create",
+          "description": "Create a clear HUD stress indicator (meter/label) that updates immediately when stress increases (including hood-fall penalties) and remains readable on mobile."
+        },
+        {
+          "path": "frontend/src/ui/Hud/HudShell.tsx",
+          "operation": "modify",
+          "description": "Wire StressIndicator into the HUD layout so it does not conflict with dialogue box or mobile controls."
+        },
+        {
+          "path": "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
+          "operation": "modify",
+          "description": "Expose hood/mouth state controls and a fast cover-up animation cue so the hood-fall mechanic can rapidly restore the hood after a player look event."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add no-weapons survival interactions: hide spots, barricadable doors, and a simple puzzle gate (keycard/code) to unlock the next area; persist progression via existing backend interface calls.",
+      "acceptanceCriteria": [
+        "At least one functional hide spot exists that changes player state to hidden and reduces/blocks enemy detection.",
+        "At least one door can be barricaded, visibly changes state, and delays the enemy for a short time.",
+        "At least one simple puzzle gate exists (keycard/code pickup + locked door/terminal) that unlocks access to the next area.",
+        "Backend stores minimal progression state (e.g., obtained keycard, unlocked area, barricaded state if needed) so it can be reloaded."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Interactions/interactionTypes.ts",
+          "operation": "create",
+          "description": "Define interaction types and context-action descriptors (hide, exit hide, barricade/unbarricade, pick up keycard/code, unlock) so the Interact button and desktop key can trigger consistent actions."
+        },
+        {
+          "path": "frontend/src/game/Interactions/useInteractionContext.ts",
+          "operation": "create",
+          "description": "Implement interaction detection (nearby interactables based on player position) and expose the active context action for the Interact button, including UI prompt text."
+        },
+        {
+          "path": "frontend/src/game/World/FacilityWorld.tsx",
+          "operation": "modify",
+          "description": "Add at least one hide spot (locker/cabinet), one barricadable door, and one puzzle-gated door/terminal (keycard or code) with visible state changes in the 3D scene."
+        },
+        {
+          "path": "frontend/src/game/Gameplay/progressionSync.ts",
+          "operation": "create",
+          "description": "Implement frontend persistence calls using the existing backend interface methods (e.g., findKeycard(), findCode(), barricadeDoor(), unbarricadeDoor(), enterSaveSpot(), exitSaveSpot()) and hydrate local gameplay state from backend.getPlayerState() on load."
+        },
+        {
+          "path": "frontend/src/ui/Controls/InteractPrompt.tsx",
+          "operation": "create",
+          "description": "Create a small on-screen prompt showing the current interaction (e.g., Hide, Barricade, Use Keycard/Code) without overlapping dialogue and stress UI."
+        },
+        {
+          "path": "frontend/src/ui/Hud/HudShell.tsx",
+          "operation": "modify",
+          "description": "Wire InteractPrompt into the HUD so it cooperates with mobile controls and remains visible when context actions are available."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add proximity-driven tension audio (hum intensity with enemy distance, mouth-smack cue) and provide settings UI for volume/mute.",
+      "acceptanceCriteria": [
+        "Proximity-based hum changes intensity/volume based on distance to enemy.",
+        "Mouth-smacking audio plays contextually when enemy is close and/or mouth is revealed.",
+        "User can mute or adjust volume from a simple settings UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Audio/useTensionAudio.ts",
+          "operation": "create",
+          "description": "Implement a lightweight audio controller (WebAudio or HTMLAudio) that drives a low-frequency hum whose intensity responds to distance to The Green Hood and triggers a mouth-smack cue when close and/or mouth is revealed."
+        },
+        {
+          "path": "frontend/src/game/Audio/audioSettingsStore.ts",
+          "operation": "create",
+          "description": "Create a small settings store for master volume and mute state, usable by both HUD settings UI and the audio controller."
+        },
+        {
+          "path": "frontend/src/ui/Settings/SettingsPanel.tsx",
+          "operation": "create",
+          "description": "Create a simple in-game settings panel/modal with volume slider and mute toggle. Use shadcn-ui components (e.g., dialog/sheet + slider/switch) to speed up UI composition; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/ui/Hud/HudShell.tsx",
+          "operation": "modify",
+          "description": "Add a settings entry point (small button) and mount SettingsPanel within the HUD shell so it is accessible during gameplay on mobile and desktop."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Script and implement the three key scenes as a deterministic playable vertical slice with triggers, dialogue beats, chase escalation/hood reveal, and fade-to-black ending text.",
+      "acceptanceCriteria": [
+        "Scene 1 starts in cafeteria and shows the specified line while the enemy is visibly present and staring.",
+        "Scene 2 triggers a chase through corridors and includes a mid-chase hood reveal and speed escalation.",
+        "Scene 3 triggers after reaching a defined endpoint and shows \"Eat you whole\" then fades to black.",
+        "Transitions between scenes are deterministic and testable (e.g., reaching a trigger volume, solving a gate)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/Scenes/sceneIds.ts",
+          "operation": "create",
+          "description": "Define canonical scene/checkpoint identifiers for the vertical slice (cafeteria encounter, corridor chase, surface ending) for deterministic transitions and persistence calls."
+        },
+        {
+          "path": "frontend/src/game/Scenes/SceneDirector.tsx",
+          "operation": "create",
+          "description": "Create a scene director that orchestrates scene start conditions, trigger volumes, scripted dialogue timing, AI mode overrides (stare vs chase), and scene transitions."
+        },
+        {
+          "path": "frontend/src/game/Scenes/sceneScripts.ts",
+          "operation": "create",
+          "description": "Implement the required scripted beats: (1) show \"You look... crunchy.\" in cafeteria while enemy stares; (2) corridor chase with mid-chase hood reveal + speed escalation and threat line \"No skin left.\"; (3) surface endpoint triggers \"Eat you whole\" and a fade to black."
+        },
+        {
+          "path": "frontend/src/ui/Overlays/FadeToBlack.tsx",
+          "operation": "create",
+          "description": "Create a full-screen fade-to-black overlay used for the ending sequence and any deterministic scene transitions."
+        },
+        {
+          "path": "frontend/src/game/State/useScenePersistence.ts",
+          "operation": "create",
+          "description": "Persist and restore the current scene/checkpoint using backend.setScene() and backend.getPlayerState() so the vertical slice can reload into the correct progression state."
+        },
+        {
+          "path": "frontend/src/game/GameView.tsx",
+          "operation": "create",
+          "description": "Create the top-level gameplay view that composes GameCanvas + FacilityWorld + SceneDirector + HUD overlays (dialogue, stress, mobile controls, settings, fade)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the GameView into the app root so the vertical slice is accessible immediately without introducing extra top-level routes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Add required static generated images under frontend/public/assets/generated and use them in the dialogue UI, mobile controls, and hood/vignette overlay.",
+      "acceptanceCriteria": [
+        "All listed generated images exist under frontend/public/assets/generated and are used by the UI.",
+        "Dialogue box uses the generated frame/background image.",
+        "Mobile controls use the generated icons.",
+        "Vignette/hood overlay uses the generated texture and is visible in gameplay."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png",
+          "operation": "create",
+          "description": "Add the generated dialogue box frame/background image asset at the exact path frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png for direct frontend referencing (no backend image serving)."
+        },
+        {
+          "path": "frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated mobile joystick base icon asset at the exact path frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png for direct frontend referencing."
+        },
+        {
+          "path": "frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated mobile joystick knob icon asset at the exact path frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png for direct frontend referencing."
+        },
+        {
+          "path": "frontend/public/assets/generated/mobile-interact-button.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated interact button icon asset at the exact path frontend/public/assets/generated/mobile-interact-button.dim_256x256.png for direct frontend referencing."
+        },
+        {
+          "path": "frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated hood-shadow/vignette overlay texture asset at the exact path frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png for direct frontend referencing."
+        },
+        {
+          "path": "frontend/src/ui/Dialogue/DialogueBox.tsx",
+          "operation": "modify",
+          "description": "Ensure DialogueBox references and renders frontend/public/assets/generated/dialogue-box-frame.dim_1024x256.png as its frame/background and remains readable on mobile."
+        },
+        {
+          "path": "frontend/src/ui/Controls/MobileJoystick.tsx",
+          "operation": "modify",
+          "description": "Ensure MobileJoystick uses frontend/public/assets/generated/mobile-joystick-base.dim_256x256.png and frontend/public/assets/generated/mobile-joystick-knob.dim_256x256.png for its visuals."
+        },
+        {
+          "path": "frontend/src/ui/Controls/InteractButton.tsx",
+          "operation": "modify",
+          "description": "Ensure InteractButton uses frontend/public/assets/generated/mobile-interact-button.dim_256x256.png for its visuals."
+        },
+        {
+          "path": "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx",
+          "operation": "modify",
+          "description": "Ensure the hood/vignette overlay uses frontend/public/assets/generated/hood-vignette-overlay.dim_1024x1024.png and is visible during gameplay."
+        }
+      ]
+    }
+  ]
+}
