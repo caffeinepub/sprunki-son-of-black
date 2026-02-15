@@ -1,267 +1,57 @@
 {
   "kind": "build_request",
-  "title": "Build 3D first-person horror game prototype: Sprunki: Son of Black (mobile controls, Green Hood AI, hood-fall stress, key scenes)",
+  "title": "Fix black map rendering so the facility is visible",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a coherent first-person horror game frontend theme and apply it consistently across UI (menus, HUD, dialogue box, buttons): gritty industrial/clinical facility vibe with high-contrast warning colors, readable typography, and a distinct jagged/pixel-horror font style for threat text. Do not use a blue/purple theme.",
+      "id": "REQ-13",
+      "text": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-7"
         ],
         "quotes": [
-          "You wake up in a cold, concrete, and industrial-looking facility...",
-          "Text appears at the bottom of the screen in a jagged font"
+          "CAN YOU MAKE THE MAP NOT JUST BLACK"
         ]
       },
       "acceptanceCriteria": [
-        "UI across the app uses one consistent color palette, spacing system, and typography choices.",
-        "Threat/dialogue text uses a jagged, horror-appropriate font treatment (via font file or CSS styling) and is readable on mobile.",
-        "Theme avoids default/template styling and avoids blue/purple as the primary theme colors."
+        "When the game loads, the cafeteria and corridor geometry are clearly visible without requiring user interaction.",
+        "The scene remains dark/tense, but surfaces (floor/walls/props) are distinguishable and not crushed to pure black across most of the screen.",
+        "Changes are implemented via Three.js/React Three Fiber configuration and/or world light setup (no backend changes)."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Implement a playable 3D first-person scene of an industrial facility (photorealistic/realistic lighting feel) using Three.js + React Three Fiber, including: corridor/cafeteria spaces, basic props, flickering lights, and an overall tense atmosphere. Use a first-person camera with limited vision (hood-shadow/vignette effect).",
+      "id": "REQ-14",
+      "text": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-7"
         ],
         "quotes": [
-          "Genre: 3D First-Person Horror / Survival / Narrative",
-          "Engine Style: Unreal Engine 5 (photorealistic facility vs. cartoonish character)",
-          "Perspective: First-person, with limited vision (hood shadows)."
+          "CAN YOU MAKE THE MAP NOT JUST BLACK"
         ]
       },
       "acceptanceCriteria": [
-        "A 3D scene renders in the browser with a controllable first-person camera.",
-        "Player view includes a persistent limited-vision effect (e.g., vignette/hood shadow) that reduces peripheral visibility.",
-        "Facility includes at least two distinct areas: a cafeteria and a corridor segment suitable for a chase.",
-        "Lighting includes at least one flickering light effect and overall low/industrial ambience."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Add mobile-first controls for first-person movement and interaction: on-screen joystick for movement, look controls (swipe/drag), and an interact button for context actions (e.g., open door, hide, barricade, read prompt). Ensure it also remains usable on desktop (WASD/mouse optional) without requiring mobile.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Has mobile controls."
-        ]
-      },
-      "acceptanceCriteria": [
-        "On touch devices, the player can move and look around using on-screen controls.",
-        "An on-screen Interact button triggers context interactions when available.",
-        "Controls are responsive and do not block critical HUD elements (dialogue box, stress indicator).",
-        "On non-touch devices, basic movement/look is still possible (keyboard/mouse or fallback controls)."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Implement a bottom-screen dialogue/thought/threat system: a text box that appears at the bottom of the screen with jagged horror styling, supports timed lines, and can partially block the view as described. Provide an API to trigger lines from scripted events and AI events.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Bottom Screen Text/Dialogue: Similar to older horror RPGs... appear in a box at the bottom of the screen, sometimes blocking part of the view."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Dialogue box can be shown/hidden programmatically and supports queued lines.",
-        "Text box appears at the bottom, visually distinct, and can occlude part of the 3D view.",
-        "At least three lines are implemented from the script: \"You look... crunchy.\", \"I will eat you whole,\" and \"No skin left.\"",
-        "System supports both one-off lines (scene trigger) and reactive lines (enemy proximity/encounter)."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Create the antagonist character \"The Green Hood\" as a stylized/cartoony 3D entity contrasted against the realistic facility. Include: tall humanoid hoodie silhouette, dark green ragged hood, glowing neon eyes, and a hidden mouth that can be revealed (Dirty-Bubble-like circular brown wrinkled mouth with jagged lips).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "The Character: \"The Green Hood\"... dark green, ragged hoodie... eyes fully illuminated... mouth... like the Dirty Bubble..."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Enemy character is visible in the 3D scene with a clear stylized look distinct from environment materials/lighting.",
-        "Eyes visibly glow in darkness (emissive material effect).",
-        "Mouth state exists (hidden vs revealed) and is visually represented when revealed.",
-        "Character can be positioned/animated/moved by AI logic (even with simple placeholder animations)."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Implement enemy AI state machine for The Green Hood with at least these states: idle/stare encounter, patrol/search, chase. Include proximity detection, line-of-sight considerations, and a chase escalation for scripted moments. Enemy does not speak; instead triggers threat text through the dialogue system.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Personality: Cruel, sadistic, and silent.",
-          "Voice/Text: He does not speak normally. Text appears...",
-          "Chase Sequence: A high-speed chase..."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Enemy can patrol or move in the scene and switch to chase when the player is detected or when a scripted chase begins.",
-        "During encounter/chase moments, threat text appears via the dialogue system (no spoken dialogue required).",
-        "Chase state visibly increases enemy speed compared to patrol/idle.",
-        "Player can temporarily evade by breaking line-of-sight and using hiding/barricade mechanics (REQ-8)."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Implement the signature \"hood fall\" mechanic: during chase or jump-scare moments, the enemy hood can fall to reveal the mouth. When revealed, if the player looks at the mouth (camera facing it within a short reaction window), the enemy reacts with \"brutal\" speed to pull the hood back up and the player receives a stress penalty. Provide clear feedback when stress increases.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "The Mechanic: When his hood falls off... his horrifying mouth is revealed. If you look at it, he immediately acts with \"brutal\" speed...",
-          "Implement \"hood fall\" mechanic... stress penalty."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Enemy has a controllable hood state (on/off) that can change mid-chase.",
-        "When mouth is revealed, the game detects whether the player camera is looking at it within a configured short time window.",
-        "If the player looks, enemy performs a rapid hood-cover reaction and player stress increases; if player looks away/hides, stress penalty is avoided or reduced.",
-        "Stress value is persisted in backend state and reflected in the HUD (e.g., meter/indicator)."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Implement no-weapons survival gameplay interactions: (1) hide spots (e.g., locker/cabinet) that break detection, (2) barricade doors to delay enemy pursuit, and (3) simple puzzle gating (e.g., find a keycard/code) to unlock new facility areas.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "No Weapons: You cannot kill him. You can only hide, barricade doors, or solve puzzles to unlock new areas of the facility."
-        ]
-      },
-      "acceptanceCriteria": [
-        "At least one functional hide spot exists that changes player state to hidden and reduces/blocks enemy detection.",
-        "At least one door can be barricaded, visibly changes state, and delays the enemy for a short time.",
-        "At least one simple puzzle gate exists (keycard/code pickup + locked door/terminal) that unlocks access to the next area.",
-        "Backend stores minimal progression state (e.g., obtained keycard, unlocked area, barricaded state if needed) so it can be reloaded."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Add audio systems for tension and telegraphing: a low-frequency hum that intensifies when The Green Hood is near, plus a mouth-smacking sound when he gets close (especially during mouth-reveal moments). Provide volume controls/mute in settings.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Audio Design: Intense, low-frequency humming when he is near. The sound of his \"dirty bubble\" mouth smacking when he gets close."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Proximity-based hum changes intensity/volume based on distance to enemy.",
-        "Mouth-smacking audio plays contextually when enemy is close and/or mouth is revealed.",
-        "User can mute or adjust volume from a simple settings UI."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Script and implement the three key scenes as a playable vertical slice: (1) First encounter in a locked cafeteria with the bottom text \"You look... crunchy.\" and enemy staring in a corner; (2) Corridor chase where the hood falls off mid-chase and speed increases; (3) Ending where player reaches the surface but final text shows \"Eat you whole\" and fades to black implying failure.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Key Scenes\nFirst Encounter... \"You look... crunchy.\"",
-          "Chase Sequence... hood falls off halfway through... speed increases",
-          "Ending... text \"Eat you whole\" as the screen goes black"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Scene 1 starts in cafeteria and shows the specified line while the enemy is visibly present and staring.",
-        "Scene 2 triggers a chase through corridors and includes a mid-chase hood reveal and speed escalation.",
-        "Scene 3 triggers after reaching a defined endpoint and shows \"Eat you whole\" then fades to black.",
-        "Transitions between scenes are deterministic and testable (e.g., reaching a trigger volume, solving a gate)."
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Backend: implement persistent player/session state in the single Motoko actor to support the vertical slice, including at minimum: player stress level, puzzle progression flags (e.g., keycard/code found), and current scene/checkpoint. Expose query/update methods used by the frontend to load/save this state.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Implement ... stress penalty.",
-          "solve puzzles to unlock facility areas",
-          "Script key scenes ... ending sequence"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Motoko actor provides methods to get and set a structured game state object for the current user/session model used by the app.",
-        "State includes stress and at least one progression flag plus a checkpoint/scene indicator.",
-        "Frontend calls backend to persist changes when stress changes and when progression/checkpoint advances.",
-        "No additional backend services are introduced; all logic remains in the single main actor."
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Add required static generated images to the frontend and use them in UI: a dialogue box frame/background, mobile control icons (joystick base/knob, interact button), and a subtle vignette/hood overlay texture. Store them under frontend/public/assets/generated and reference them directly from the frontend (no backend image serving).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Bottom Screen Text/Dialogue... box at the bottom...",
-          "Has mobile controls.",
-          "limited vision (hood shadows)."
-        ]
-      },
-      "acceptanceCriteria": [
-        "All listed generated images exist under frontend/public/assets/generated and are used by the UI.",
-        "Dialogue box uses the generated frame/background image.",
-        "Mobile controls use the generated icons.",
-        "Vignette/hood overlay uses the generated texture and is visible in gameplay."
+        "With default gameplay (no ending/transition), the FadeToBlack overlay is not visible.",
+        "The hood vignette overlay darkens edges but does not make the center gameplay view appear black.",
+        "If FadeToBlack is triggered by existing scripted events, it still fades smoothly to black as designed."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor (no additional backend services).",
-    "Do not edit files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT; compose/wrap them instead.",
-    "Use English for all user-facing text."
+    "Do not edit files under frontend/src/components/ui (read-only Shadcn components).",
+    "Do not modify immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Backend architecture must remain single-actor; no backend changes are required for this request."
   ],
   "nonGoals": [
-    "Multiplayer, chat, or real-time networking features.",
-    "Weapons, combat systems, or the ability to kill The Green Hood.",
-    "Third-party authentication providers (only Internet Identity is allowed, but not required for this prototype).",
-    "External databases or non-IC hosting/deployment targets.",
-    "Photorealistic UE5 rendering parity; target a web-appropriate approximation using Three.js/R3F."
+    "Adding a new map/level or new gameplay content.",
+    "Adding real-time networking or external services.",
+    "Changing the overall horror/industrial theme to a bright or colorful aesthetic."
   ],
   "imageRequirements": {
-    "required": [
-      "Industrial horror dialogue box frame/background (dialogue-box-frame.dim_1024x256.png)",
-      "On-screen joystick base icon (mobile-joystick-base.dim_256x256.png)",
-      "On-screen joystick knob icon (mobile-joystick-knob.dim_256x256.png)",
-      "Interact button icon, distressed style (mobile-interact-button.dim_256x256.png)",
-      "Subtle hood-shadow/vignette overlay texture (hood-vignette-overlay.dim_1024x1024.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

@@ -11,24 +11,42 @@ export function FacilityWorld() {
     flickerTime.current += delta;
     if (flickerLightRef.current) {
       const flicker = Math.sin(flickerTime.current * 20) * 0.3 + 0.7;
-      flickerLightRef.current.intensity = 0.8 * flicker;
+      flickerLightRef.current.intensity = 1.2 * flicker;
     }
   });
 
   return (
     <>
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[5, 10, 5]} intensity={0.3} castShadow />
+      {/* Enhanced ambient lighting for visibility */}
+      <ambientLight intensity={0.25} color="#1a1a1a" />
+      <hemisphereLight 
+        color="#2a2a3a" 
+        groundColor="#0a0a0a" 
+        intensity={0.4} 
+      />
+      <directionalLight 
+        position={[5, 10, 5]} 
+        intensity={0.6} 
+        color="#d4d4d4"
+        castShadow 
+      />
       
-      {/* Flickering light in corridor */}
+      {/* Flickering light in corridor - enhanced */}
       <pointLight
         ref={flickerLightRef}
         position={[0, 2.5, -8]}
-        intensity={0.8}
-        distance={12}
+        intensity={1.2}
+        distance={15}
         color="#e8d4a0"
         castShadow
+      />
+
+      {/* Additional corridor accent light */}
+      <pointLight
+        position={[0, 2.8, -15]}
+        intensity={0.6}
+        distance={10}
+        color="#d4a574"
       />
 
       {/* Cafeteria area */}
@@ -68,6 +86,14 @@ export function FacilityWorld() {
           <boxGeometry args={[8, 1, 1.5]} />
           <meshStandardMaterial color="#3a3a3a" roughness={0.6} />
         </mesh>
+
+        {/* Cafeteria overhead light */}
+        <pointLight
+          position={[0, 3.5, 3]}
+          intensity={0.8}
+          distance={12}
+          color="#d4d4c4"
+        />
       </group>
 
       {/* Corridor */}

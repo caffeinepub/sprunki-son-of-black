@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "3D first-person horror/survival narrative game \"Sprunki: Son of Black\" set in a photorealistic industrial facility (UE5 style) with a cartoonish antagonist \"The Green Hood,\" featuring mobile controls, chase/stealth gameplay, bottom-screen text dialogue, and a signature hood-fall/look-away stress mechanic.",
   "architectural_notes": [
     "Game is 3D first-person horror/survival with no combat; progression via stealth, barricades, and puzzles.",
@@ -9,9 +9,10 @@
     "Signature gameplay mechanic: hood-fall/look-away reaction tied to stress/penalty system.",
     "Target includes mobile controls (touch input)."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Industrial horror dialogue box frame/background (dialogue-box-frame.dim_1024x256.png)\n- On-screen joystick base icon (mobile-joystick-base.dim_256x256.png)\n- On-screen joystick knob icon (mobile-joystick-knob.dim_256x256.png)\n- Interact button icon, distressed style (mobile-interact-button.dim_256x256.png)\n- Subtle hood-shadow/vignette overlay texture (hood-vignette-overlay.dim_1024x1024.png)",
+  "known_issues": [
+    "Map/scene is rendering completely black (likely lighting/material/camera/exposure issue), making the environment not visible."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-coherent-first-person-horror-game-frontend-theme-and-apply-it-consistently-across-ui-menus-hud-dialogue-box-buttons-gritty-industrial-clinical-facility-vibe-with-high-contrast-warning-colors-readable-typography-and-a-distinct-jagged-pixel-horror-font-style-for-threat-text-do-not-use-a-blue-purple-theme",
@@ -98,6 +99,22 @@
       "title": "Add required static generated images to the frontend and use them in UI: a dialogue box frame/background, mobile control icons (joystick base/knob, interact button), and a subtle vignette/hood overlay texture. Store them under frontend/public/assets/generated and reference them directly from the frontend (no backend image serving).",
       "reqIds": [
         "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-3d-scene-rendering-so-the-facility-environment-is-visible-not-fully-black-by-adjusting-scene-lighting-and-renderer-settings-exposure-tone-mapping-background-while-preserving-the-intended-dark-industrial-horror-mood",
+      "title": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-prevent-full-screen-overlays-from-unintentionally-making-gameplay-appear-black-by-ensuring-the-hood-vignette-and-fade-overlay-do-not-fully-obscure-the-scene-during-normal-play-e-g-adjust-blend-opacity-defaults-and-ensure-fadetoblack-is-inactive-unless-explicitly-triggered",
+      "title": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
+      "reqIds": [
+        "REQ-14"
       ],
       "version": 1
     }

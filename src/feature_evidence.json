@@ -2,95 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-coherent-first-person-horror-game-frontend-theme-and-apply-it-consistently-across-ui-menus-hud-dialogue-box-buttons-gritty-industrial-clinical-facility-vibe-with-high-contrast-warning-colors-readable-typography-and-a-distinct-jagged-pixel-horror-font-style-for-threat-text-do-not-use-a-blue-purple-theme",
-      "featureTitle": "Create a coherent first-person horror game frontend theme and apply it consistently across UI (menus, HUD, dialogue box, buttons): gritty industrial/clinical facility vibe with high-contrast warning colors, readable typography, and a distinct jagged/pixel-horror font style for threat text. Do not use a blue/purple theme.",
+      "featureId": "feature-fix-the-3d-scene-rendering-so-the-facility-environment-is-visible-not-fully-black-by-adjusting-scene-lighting-and-renderer-settings-exposure-tone-mapping-background-while-preserving-the-intended-dark-industrial-horror-mood",
+      "featureTitle": "Fix the 3D scene rendering so the facility environment is visible (not fully black), by adjusting scene lighting and renderer settings (exposure/tone mapping/background) while preserving the intended dark industrial-horror mood.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/index.css",
-        "frontend/src/ui/Hud/HudShell.tsx",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-a-playable-3d-first-person-scene-of-an-industrial-facility-photorealistic-realistic-lighting-feel-using-three-js-react-three-fiber-including-corridor-cafeteria-spaces-basic-props-flickering-lights-and-an-overall-tense-atmosphere-use-a-first-person-camera-with-limited-vision-hood-shadow-vignette-effect",
-      "featureTitle": "Implement a playable 3D first-person scene of an industrial facility (photorealistic/realistic lighting feel) using Three.js + React Three Fiber, including: corridor/cafeteria spaces, basic props, flickering lights, and an overall tense atmosphere. Use a first-person camera with limited vision (hood-shadow/vignette effect).",
-      "files": [
-        "frontend/src/game/World/FacilityWorld.tsx",
-        "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-mobile-first-controls-for-first-person-movement-and-interaction-on-screen-joystick-for-movement-look-controls-swipe-drag-and-an-interact-button-for-context-actions-e-g-open-door-hide-barricade-read-prompt-ensure-it-also-remains-usable-on-desktop-wasd-mouse-optional-without-requiring-mobile",
-      "featureTitle": "Add mobile-first controls for first-person movement and interaction: on-screen joystick for movement, look controls (swipe/drag), and an interact button for context actions (e.g., open door, hide, barricade, read prompt). Ensure it also remains usable on desktop (WASD/mouse optional) without requiring mobile.",
-      "files": [
-        "frontend/src/game/Input/useInputMode.ts",
-        "frontend/src/game/Input/useKeyboardMouse.ts",
-        "frontend/src/game/Input/useTouchLook.ts",
-        "frontend/src/game/Player/PlayerController.tsx",
-        "frontend/src/ui/Controls/InteractButton.tsx",
-        "frontend/src/ui/Controls/MobileJoystick.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-a-bottom-screen-dialogue-thought-threat-system-a-text-box-that-appears-at-the-bottom-of-the-screen-with-jagged-horror-styling-supports-timed-lines-and-can-partially-block-the-view-as-described-provide-an-api-to-trigger-lines-from-scripted-events-and-ai-events",
-      "featureTitle": "Implement a bottom-screen dialogue/thought/threat system: a text box that appears at the bottom of the screen with jagged horror styling, supports timed lines, and can partially block the view as described. Provide an API to trigger lines from scripted events and AI events.",
-      "files": [
-        "frontend/src/game/Dialogue/DialogueContext.tsx",
-        "frontend/src/game/Dialogue/scriptedLines.ts",
-        "frontend/src/ui/Dialogue/DialogueBox.tsx",
-        "frontend/src/ui/Hud/HudShell.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-the-antagonist-character-the-green-hood-as-a-stylized-cartoony-3d-entity-contrasted-against-the-realistic-facility-include-tall-humanoid-hoodie-silhouette-dark-green-ragged-hood-glowing-neon-eyes-and-a-hidden-mouth-that-can-be-revealed-dirty-bubble-like-circular-brown-wrinkled-mouth-with-jagged-lips",
-      "featureTitle": "Create the antagonist character \"The Green Hood\" as a stylized/cartoony 3D entity contrasted against the realistic facility. Include: tall humanoid hoodie silhouette, dark green ragged hood, glowing neon eyes, and a hidden mouth that can be revealed (Dirty-Bubble-like circular brown wrinkled mouth with jagged lips).",
-      "files": [
-        "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
-        "frontend/src/game/Enemies/GreenHood/GreenHoodModel.tsx",
+        "frontend/src/game/GameView.tsx",
         "frontend/src/game/World/FacilityWorld.tsx"
       ],
       "components": [
@@ -101,120 +16,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-13"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-enemy-ai-state-machine-for-the-green-hood-with-at-least-these-states-idle-stare-encounter-patrol-search-chase-include-proximity-detection-line-of-sight-considerations-and-a-chase-escalation-for-scripted-moments-enemy-does-not-speak-instead-triggers-threat-text-through-the-dialogue-system",
-      "featureTitle": "Implement enemy AI state machine for The Green Hood with at least these states: idle/stare encounter, patrol/search, chase. Include proximity detection, line-of-sight considerations, and a chase escalation for scripted moments. Enemy does not speak; instead triggers threat text through the dialogue system.",
+      "featureId": "feature-prevent-full-screen-overlays-from-unintentionally-making-gameplay-appear-black-by-ensuring-the-hood-vignette-and-fade-overlay-do-not-fully-obscure-the-scene-during-normal-play-e-g-adjust-blend-opacity-defaults-and-ensure-fadetoblack-is-inactive-unless-explicitly-triggered",
+      "featureTitle": "Prevent full-screen overlays from unintentionally making gameplay appear black by ensuring the hood vignette and fade overlay do not fully obscure the scene during normal play (e.g., adjust blend/opacity defaults and ensure FadeToBlack is inactive unless explicitly triggered).",
       "files": [
-        "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
-        "frontend/src/game/Enemies/GreenHood/greenHoodAI.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-signature-hood-fall-mechanic-during-chase-or-jump-scare-moments-the-enemy-hood-can-fall-to-reveal-the-mouth-when-revealed-if-the-player-looks-at-the-mouth-camera-facing-it-within-a-short-reaction-window-the-enemy-reacts-with-brutal-speed-to-pull-the-hood-back-up-and-the-player-receives-a-stress-penalty-provide-clear-feedback-when-stress-increases",
-      "featureTitle": "Implement the signature \"hood fall\" mechanic: during chase or jump-scare moments, the enemy hood can fall to reveal the mouth. When revealed, if the player looks at the mouth (camera facing it within a short reaction window), the enemy reacts with \"brutal\" speed to pull the hood back up and the player receives a stress penalty. Provide clear feedback when stress increases.",
-      "files": [
-        "frontend/src/game/Enemies/GreenHood/GreenHoodEntity.tsx",
-        "frontend/src/game/Gameplay/hoodFallMechanic.ts",
-        "frontend/src/game/State/usePlayerState.ts",
         "frontend/src/ui/Hud/HudShell.tsx",
-        "frontend/src/ui/Hud/StressIndicator.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-no-weapons-survival-gameplay-interactions-1-hide-spots-e-g-locker-cabinet-that-break-detection-2-barricade-doors-to-delay-enemy-pursuit-and-3-simple-puzzle-gating-e-g-find-a-keycard-code-to-unlock-new-facility-areas",
-      "featureTitle": "Implement no-weapons survival gameplay interactions: (1) hide spots (e.g., locker/cabinet) that break detection, (2) barricade doors to delay enemy pursuit, and (3) simple puzzle gating (e.g., find a keycard/code) to unlock new facility areas.",
-      "files": [
-        "frontend/src/game/World/FacilityWorld.tsx",
-        "frontend/src/ui/Controls/InteractPrompt.tsx",
-        "frontend/src/ui/Hud/HudShell.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-audio-systems-for-tension-and-telegraphing-a-low-frequency-hum-that-intensifies-when-the-green-hood-is-near-plus-a-mouth-smacking-sound-when-he-gets-close-especially-during-mouth-reveal-moments-provide-volume-controls-mute-in-settings",
-      "featureTitle": "Add audio systems for tension and telegraphing: a low-frequency hum that intensifies when The Green Hood is near, plus a mouth-smacking sound when he gets close (especially during mouth-reveal moments). Provide volume controls/mute in settings.",
-      "files": [
-        "frontend/src/game/Audio/audioSettingsStore.ts",
-        "frontend/src/game/Audio/useTensionAudio.ts",
-        "frontend/src/ui/Hud/HudShell.tsx",
-        "frontend/src/ui/Settings/SettingsPanel.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-script-and-implement-the-three-key-scenes-as-a-playable-vertical-slice-1-first-encounter-in-a-locked-cafeteria-with-the-bottom-text-you-look-crunchy-and-enemy-staring-in-a-corner-2-corridor-chase-where-the-hood-falls-off-mid-chase-and-speed-increases-3-ending-where-player-reaches-the-surface-but-final-text-shows-eat-you-whole-and-fades-to-black-implying-failure",
-      "featureTitle": "Script and implement the three key scenes as a playable vertical slice: (1) First encounter in a locked cafeteria with the bottom text \"You look... crunchy.\" and enemy staring in a corner; (2) Corridor chase where the hood falls off mid-chase and speed increases; (3) Ending where player reaches the surface but final text shows \"Eat you whole\" and fades to black implying failure.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/game/GameView.tsx",
-        "frontend/src/game/Scenes/SceneDirector.tsx",
-        "frontend/src/ui/Overlays/FadeToBlack.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-required-static-generated-images-to-the-frontend-and-use-them-in-ui-a-dialogue-box-frame-background-mobile-control-icons-joystick-base-knob-interact-button-and-a-subtle-vignette-hood-overlay-texture-store-them-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend-no-backend-image-serving",
-      "featureTitle": "Add required static generated images to the frontend and use them in UI: a dialogue box frame/background, mobile control icons (joystick base/knob, interact button), and a subtle vignette/hood overlay texture. Store them under frontend/public/assets/generated and reference them directly from the frontend (no backend image serving).",
-      "files": [
-        "frontend/src/ui/Controls/InteractButton.tsx",
-        "frontend/src/ui/Controls/MobileJoystick.tsx",
-        "frontend/src/ui/Dialogue/DialogueBox.tsx",
+        "frontend/src/ui/Overlays/FadeToBlack.tsx",
         "frontend/src/ui/Overlays/HoodVignetteOverlay.tsx"
       ],
       "components": [
@@ -225,7 +36,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
+        "REQ-14"
       ],
       "confidence": "high"
     }

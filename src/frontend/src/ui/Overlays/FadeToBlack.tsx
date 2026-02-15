@@ -27,11 +27,12 @@ export function FadeToBlack({ active = false, duration = 2000 }: FadeToBlackProp
     }
   }, [active, duration]);
 
+  // Only render when active or fading out
   if (!active && opacity === 0) return null;
 
   return (
     <div
-      className="absolute inset-0 bg-black pointer-events-none z-50 transition-opacity"
+      className="absolute inset-0 bg-black pointer-events-none z-50"
       style={{ opacity }}
     />
   );

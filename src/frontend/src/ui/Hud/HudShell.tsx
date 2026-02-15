@@ -13,6 +13,7 @@ import { useState } from 'react';
 export function HudShell() {
   const { isTouchDevice } = useInputMode();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [fadeActive, setFadeActive] = useState(false);
 
   return (
     <>
@@ -53,7 +54,7 @@ export function HudShell() {
         </div>
       </div>
 
-      <FadeToBlack />
+      <FadeToBlack active={fadeActive} />
       <SettingsPanel open={settingsOpen} onOpenChange={setSettingsOpen} />
     </>
   );
